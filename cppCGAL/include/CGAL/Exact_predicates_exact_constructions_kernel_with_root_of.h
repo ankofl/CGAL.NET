@@ -18,14 +18,7 @@
 #define CGAL_EXACT_PREDICATES_EXACT_CONSTRUCTIONS_KERNEL_WITH_ROOT_OF_H
 
 #include <CGAL/Simple_cartesian.h>
-
-#ifdef CGAL_USE_LEDA
-#  include <CGAL/leda_real.h>
-#elif defined CGAL_USE_CORE
-#  include <CGAL/CORE_Expr.h>
-#else
-#  error "You need LEDA or CORE installed."
-#endif
+//#include <CGAL/leda_real.h>
 
 namespace CGAL {
 

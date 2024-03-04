@@ -6,5 +6,6 @@
   <ItemGroup>
     <ClInclude Include="Method.h" />
     <ClInclude Include="Boolean.h" />
+    <ClInclude Include="Polyhedron_OFF_iostream.h" />
   </ItemGroup>
 </Project>

@@ -8,13 +8,7 @@ extern "C" __declspec(dllexport) void CallMethod()
 
     //Method();
 
-    for (int i = 0; i < 25; i++) {
-        std::cout << "\n\n\n";
-        Boolean();
-        std::cout << "\n\n\n";
-    }
-
-    
+    Boolean();
 
     //Exit();
 }

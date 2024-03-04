@@ -17,7 +17,7 @@ namespace PMP = CGAL::Polygon_mesh_processing;
 
 int Boolean()
 {
-    auto start_time = std::chrono::high_resolution_clock::now();
+    
     // Пытаемся открыть файл
     //std::ifstream input("C:/demo/ANKOBIM/Data/anchor_dense.off"); 
     std::ifstream input("C:/demo/CGAL-5.6/data/meshes/bunny00.off");
@@ -42,35 +42,27 @@ int Boolean()
         return 1;
     }
     input.close();
-    auto end_time = std::chrono::high_resolution_clock::now();
-    std::cout << "End\n";
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-    // Выводим разницу времени (в миллисекундах)
-    std::cout << "DeltaTime: " << duration << " milliseconds\n";
 
     Mesh out;
-
-    start_time = std::chrono::high_resolution_clock::now();
-    std::cout << "Start\n";
+    auto start_time = std::chrono::high_resolution_clock::now();
     if (PMP::corefine_and_compute_union(mesh1, mesh2, out))
     {
-        end_time = std::chrono::high_resolution_clock::now();
-        std::cout << "End\n";
-        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-        // Выводим разницу времени (в миллисекундах)
-        std::cout << "DeltaTime: " << duration << " milliseconds\n";
-
-
-        start_time = std::chrono::high_resolution_clock::now();
         std::ofstream output("union.off");
         output << out;
-        end_time = std::chrono::high_resolution_clock::now();
-        std::cout << "End\n";
-        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-        // Выводим разницу времени (в миллисекундах)
-        std::cout << "DeltaTime: " << duration << " milliseconds\n";
-        return 0;
     }
-    std::cout << "Union could not be computed\n";
+    if (PMP::corefine_and_compute_intersection(mesh1, mesh2, out))
+    {
+        std::ofstream output("intersection.off");
+        output << out;
+    }
+    if (PMP::corefine_and_compute_difference(mesh2, mesh1, out))
+    {
+        std::ofstream output("difference.off");
+        output << out;
+    }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    std::cout << "DeltaTime: " << duration << " milliseconds\n";
     return 1;
 }

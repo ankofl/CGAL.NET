@@ -19,6 +19,7 @@ del /q %BuildPath%\cppCGAL.exp
 del /q %BuildPath%\cppCGAL.lib
 del /q %ScriptPath%\cppCGAL\cppCGAL.vcxproj.user
 rmdir /s /q %ScriptPath%\cppCGAL\cppCGAL
+rmdir /s /q %ScriptPath%\cppCGAL\Build
 
 rem Сборка проекта из подпапки \netCGAL\
 dotnet publish -c Debug -r win-x64 --self-contained false -o %BuildPath%\ /p:TargetFramework=net8.0 %ScriptPath%netCGAL\netCGAL.csproj

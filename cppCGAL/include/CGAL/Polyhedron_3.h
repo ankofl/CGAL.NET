@@ -481,8 +481,7 @@ class Polyhedron_3 {
     // geometric properties, e.g. test for self intersections which
     // is  too expensive to be guaranteed as a class invariant.
 public:
-    typedef Polyhedron_3< PolyhedronTraits_3, PolyhedronItems_3, T_HDS, Alloc>
-                                                  Self;
+    typedef Polyhedron_3< PolyhedronTraits_3, PolyhedronItems_3, T_HDS, Alloc> Self;
     typedef PolyhedronTraits_3                    Traits;
     typedef PolyhedronItems_3                     Items;
     typedef I_Polyhedron_derived_items_3<Items>   Derived_items;

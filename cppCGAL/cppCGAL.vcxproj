@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="Boolean.h" />
     <ClInclude Include="Method.h" />
+    <ClInclude Include="Polyhedron_OFF_iostream.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
