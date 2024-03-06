@@ -68,7 +68,7 @@ bool read_OFF_BGL(std::istream& is,
                   const CGAL_NP_CLASS& np)
 {
   typedef typename CGAL::GetVertexPointMap<Graph, CGAL_NP_CLASS>::type  VPM;
-  typedef typename boost::property_traits<VPM>::value_type                  Point;
+  typedef typename boost::property_traits<VPM>::value_type Point;
 
   internal::OFF_builder<Graph, Point> builder(is);
   return builder(g, np);

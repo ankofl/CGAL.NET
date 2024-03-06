@@ -19,8 +19,8 @@ int Boolean()
 {
     
     // ѕытаемс€ открыть файл
-    //std::ifstream input("C:/demo/ANKOBIM/Data/anchor_dense.off"); 
-    std::ifstream input("C:/demo/CGAL-5.6/data/meshes/bunny00.off");
+    //std::ifstream input("C:/demo/CGAL.NET/Data/meshes/anchor_dense.off"); 
+    std::ifstream input("C:/demo/CGAL.NET/Data/meshes/bunny00.off");
 
     if (!input) {
         std::cerr << "null" << std::endl;
@@ -33,8 +33,8 @@ int Boolean()
         return 1;
     }
     input.close();
-    input.open("C:/demo/CGAL-5.6/data/meshes/refined_elephant.off");
-    //input.open("C:/demo/CGAL-5.6/data/meshes/diplodocus.off");
+    input.open("C:/demo/CGAL.NET/Data/meshes/refined_elephant.off");
+    //input.open("C:/demo/CGAL.NET/Data/meshes/diplodocus.off");
 
     if (!input || !(input >> mesh2))
     {
@@ -49,16 +49,19 @@ int Boolean()
     {
         std::ofstream output("union.off");
         output << out;
+        out = Mesh();
     }
     if (PMP::corefine_and_compute_intersection(mesh1, mesh2, out))
     {
         std::ofstream output("intersection.off");
         output << out;
+        out = Mesh();
     }
-    if (PMP::corefine_and_compute_difference(mesh2, mesh1, out))
+    if (PMP::corefine_and_compute_difference(mesh1, mesh2, out))
     {
         std::ofstream output("difference.off");
         output << out;
+        out = Mesh();
     }
 
     auto end_time = std::chrono::high_resolution_clock::now();

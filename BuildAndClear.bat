@@ -13,7 +13,8 @@ mkdir %BuildPath%
 
 del /q %ScriptPath%\cppCGAL\cppCGAL.dll
 
-msbuild %ScriptPath%\cppCGAL\cppCGAL.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:OutDir=%BuildPath%\
+rem msbuild %ScriptPath%\cppCGAL\cppCGAL.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:OutDir=%BuildPath%\
+msbuild %ScriptPath%\cppCGAL\cppCGAL.vcxproj /p:Configuration=Release /p:Platform=x64 /p:OutDir=%BuildPath%\
 
 del /q %BuildPath%\cppCGAL.exp
 del /q %BuildPath%\cppCGAL.lib
