@@ -1,8 +1,8 @@
 ﻿using netCGAL;
-Console.WriteLine("Started");
+Console.WriteLine("Start");
 
 NetCGAL.CallMethod();
 
 
-Console.WriteLine("Finished");
+Console.WriteLine("Finish");
 Console.ReadKey();
