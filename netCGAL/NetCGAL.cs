@@ -7,9 +7,36 @@ using System.Threading.Tasks;
 
 namespace netCGAL
 {
-	public class NetCGAL
+	public static class NetCGAL
 	{ 
-		[DllImport("cppCGAL.dll", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void  CallMethod();
+		public static int Multi(Mesh mesh)
+		{
+			// Создание GCHandle для объекта
+			GCHandle objHandle = GCHandle.Alloc(mesh, GCHandleType.Pinned);
+			int result = 0;
+			try
+			{
+				IntPtr objPtr = objHandle.AddrOfPinnedObject();
+				result = Multi(objPtr);
+			}
+			catch
+			{
+				result = -1;
+			}
+			finally
+			{
+				objHandle.Free();
+			}
+
+			return result;
+		}
+
+		const string pathDll = "cppCGAL.dll";
+
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+	    private static extern int Multi(IntPtr obj);
+
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void CallMethod();
 	}
 }

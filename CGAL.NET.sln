@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "consCGAL", "consCGAL\consCGAL.csproj", "{B9602BB6-6071-4595-9140-5C1A2E1CE7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "appCGAL", "consCGAL\appCGAL.csproj", "{B9602BB6-6071-4595-9140-5C1A2E1CE7E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "netCGAL", "netCGAL\netCGAL.csproj", "{901C869F-97D4-49A3-9220-5F43D216FC3A}"
 EndProject

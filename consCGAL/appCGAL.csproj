@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<TargetFramework>net8.0</TargetFramework>
+		<BaseOutputPath>..\Build</BaseOutputPath>
+		
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<!--<DebugType>none</DebugType>-->
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<OutputPath>$(SolutionDir)\Build\</OutputPath>
+		<IntermediateOutputPath>obj\</IntermediateOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="appCGAL.cs" />
+
+		<Reference Include="netCGAL">
+	    <HintPath>..\Build\netCGAL.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+	
+</Project>
