@@ -8,27 +8,29 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-	  <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+	  <!--<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 	  <GenerateDependencyFile>false</GenerateDependencyFile>
-	  <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+	  <GenerateAssemblyInfo>False</GenerateAssemblyInfo>-->
 	  <!--<DebugType>none</DebugType>-->
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <OutputPath>$(SolutionDir)\Build\</OutputPath>
 	  <IntermediateOutputPath>obj\</IntermediateOutputPath>
+	  <Platforms>x64</Platforms>
+	  <Configurations>Publish</Configurations>
+
+	  <Optimize>false</Optimize>
   </PropertyGroup>
 
 	<ItemGroup>
-		<!--<None Include="README.md" Pack="true" PackagePath="" />-->
-		<!--<None Include="LICENSE.md" Pack="true" PackagePath="" />-->
-		<Compile Include="Mesh.cs" />
+		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<Compile Include="MeshStruct.cs" />
 		<Compile Include="NetCGAL.cs" />
 
-		<!--<Reference Include="UnityEngine.CoreModule">
+		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>..\..\..\Program Files\Unity\Hub\Editor\2022.3.20f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
 			<Private>false</Private>
-		</Reference>-->
+		</Reference>
 	</ItemGroup>
-	
-	
 </Project>

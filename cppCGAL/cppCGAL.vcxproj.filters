@@ -7,6 +7,6 @@
   <ItemGroup>
     <ClInclude Include="Method.h" />
     <ClInclude Include="Boolean.h" />
-    <ClInclude Include="Multiply.h" />
+    <ClInclude Include="MeshStruct.h" />
   </ItemGroup>
 </Project>
