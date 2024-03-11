@@ -9,7 +9,8 @@ extern "C" {
 		float** array2, int* size,
 		int** arrayIndex, int* sizeIndex,
 		
-		MeshStruct mesh)
+		MeshStruct mesh,
+		MeshStruct* meshOut )
 	{
 
 		for (int i = 0; i < length; ++i) {
@@ -43,7 +44,24 @@ extern "C" {
 		}
 		//*********************
 
-		std::cout << mesh.IndexesCount << " " << mesh.PointsCount;
+		//std::cout << mesh.IndexesCount << " " << mesh.PointsCount;
+
+		//std::cout << mesh.Indexes;
+
+		meshOut->IndexesCount = mesh.IndexesCount;
+		meshOut->Indexes = new int[meshOut->IndexesCount];
+		for (int i = 0; i < meshOut->IndexesCount; i++) {
+			//meshOut->Indexes[i] = mesh.Indexes[i];
+			
+			meshOut->Indexes[i] = mesh.Indexes[i];
+			std::cout << meshOut->Indexes[i] << "\n";
+		}
+
+		/*meshOut->PointsCount = mesh.PointsCount;
+		meshOut->Points = new float[meshOut->PointsCount];
+		for (int i = 0; i < meshOut->PointsCount; ++i) {
+			(meshOut->Points)[i] = mesh.Points[i];
+		}*/
 
 		// Ваш код обработки данных
 		return 0;

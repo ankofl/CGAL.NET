@@ -32,15 +32,11 @@ class appCGAL
 						3.0f, 4.0f, 5.0f,
 						13.0f, 7.0f, 8.0f],
 			Indexes = [0, 1, 2],
-
-			PointsCount = 100,
-			IndexesCount = 25,
 		};
+		mesh.FloatsCount = mesh.Floats.Length;
+		mesh.IndexesCount = mesh.Indexes.Length;
 
-		for (int i = 0; i < 1000000; i++)
-		{
-			Console.WriteLine(ToCpp(mesh));
-		}
+		Console.WriteLine(ToCpp(mesh));
 
 
 		Console.WriteLine("Finished");
@@ -50,6 +46,9 @@ class appCGAL
 	static int ToCpp(MeshStruct mesh)
 	{
 		int result;
+
+		mesh.CopyDataToPtrs();
+
 		try
 		{
 			result = NetCGAL.ProcessMesh(
@@ -59,7 +58,11 @@ class appCGAL
 				out IntPtr ptrFloats, out int FloatsSize,
 				out IntPtr ptrIndexes, out int IndexesSize,
 				
-				mesh);
+				mesh,
+				out MeshStruct meshOut);
+
+			meshOut.Indexes = new int[meshOut.IndexesCount];
+			Marshal.Copy(meshOut.IndexesPtr, meshOut.Indexes, 0, meshOut.IndexesCount);
 
 			if (ptrFloats != IntPtr.Zero && ptrIndexes != IntPtr.Zero)
 			{
