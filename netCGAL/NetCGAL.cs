@@ -18,7 +18,8 @@ namespace netCGAL
 			int[] Indexes, int indexesLength,
 			out IntPtr prtFloats, out int FloatsSize,
 			out IntPtr prtIndexes, out int IndexesSize,
-			MeshStruct mesh);
+			MeshStruct mesh,
+			out MeshStruct meshOut);
 
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
