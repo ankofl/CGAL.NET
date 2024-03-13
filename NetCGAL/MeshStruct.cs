@@ -10,44 +10,84 @@ namespace NetCGAL
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MeshStruct
 	{
-		public IntPtr FloatsPtr;
-		public IntPtr IndexesPtr;
-		public int FloatsCount;
-		public int IndexesCount;
+		private IntPtr FloatsPtr;
+		private IntPtr IndexesPtr;
+
+		private int FloatsLength;
+		private int IndexesLength;
 
 		[NonSerialized]
-		public float[] Floats;
+		private float[] Floats;
 		[NonSerialized]
-		public int[] Indexes;
+		private int[] Indexes;
 
-
-		public void CopyDataFromPointers()
+		public MeshStruct(float[] floats, int[] indexes)
 		{
-			if (FloatsCount > 0)
-			{
-				Floats = new float[FloatsCount];
-				Marshal.Copy(FloatsPtr, Floats, 0, FloatsCount);
-			}
+			Floats = floats;
+			Indexes = indexes;
 
-			if (IndexesCount > 0)
+			PtrCreate();
+		}
+
+		[DllImport(CallerCGAL.pathDll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern void ReleaseMesh(IntPtr ptrFloats, IntPtr ptrIndexes);
+
+		[DllImport(CallerCGAL.pathDll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern int ProcessMesh(MeshStruct mesh, out MeshStruct meshOut);
+
+		public MeshStruct Multiply()
+		{
+			PtrCreate();
+			int code = ProcessMesh(this, out MeshStruct meshOut);
+			meshOut.PtrLoadAndClear();
+			PtrClear();
+			return meshOut;
+		}
+
+		private void PtrClear()
+		{
+			if (FloatsPtr != IntPtr.Zero && IndexesPtr != IntPtr.Zero)
 			{
-				Indexes = new int[IndexesCount];
-				Marshal.Copy(IndexesPtr, Indexes, 0, IndexesCount);
+				ReleaseMesh(FloatsPtr, IndexesPtr);
+				FloatsPtr = IntPtr.Zero;
+				IndexesPtr = IntPtr.Zero;
+			}
+			else
+			{
+				throw new Exception("Failed Ptr Clear");
 			}
 		}
 
-		public void CopyDataToPtrs()
+		private void PtrCreate()
 		{
-			if (FloatsCount > 0)
+			if(FloatsPtr == IntPtr.Zero || IndexesPtr == IntPtr.Zero)
 			{
-				FloatsPtr = Marshal.AllocCoTaskMem(sizeof(float) * FloatsCount);
-				Marshal.Copy(Floats, 0, FloatsPtr, FloatsCount);
-			}
+				FloatsLength = Floats.Length;
+				IndexesLength = Indexes.Length;
 
-			if (IndexesCount > 0)
+				FloatsPtr = Marshal.AllocCoTaskMem(sizeof(float) * FloatsLength);
+				Marshal.Copy(Floats, 0, FloatsPtr, FloatsLength);
+
+				IndexesPtr = Marshal.AllocCoTaskMem(sizeof(int) * IndexesLength);
+				Marshal.Copy(Indexes, 0, IndexesPtr, IndexesLength);
+			}
+		}
+
+		private void PtrLoadAndClear()
+		{
+			if(FloatsPtr != IntPtr.Zero && IndexesPtr != IntPtr.Zero)
 			{
-				IndexesPtr = Marshal.AllocCoTaskMem(sizeof(int) * IndexesCount);
-				Marshal.Copy(Indexes, 0, IndexesPtr, IndexesCount);
+				Floats = new float[FloatsLength];
+				Marshal.Copy(FloatsPtr, Floats, 0, FloatsLength);
+
+				Indexes = new int[IndexesLength];
+				Marshal.Copy(IndexesPtr, Indexes, 0, IndexesLength);
+
+				PtrClear();
+			}
+			else
+			{
+				throw new Exception("Failed Ptr Load");
 			}
 		}
 	}
