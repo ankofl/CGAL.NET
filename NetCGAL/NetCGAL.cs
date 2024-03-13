@@ -14,14 +14,16 @@ namespace NetCGAL
 		{
 			Console.WriteLine("Started");
 
+			CallerCGAL.CallMethod();
+
 			Stopwatch timer = new();
 			timer.Start();
 			var mesh = new MeshStruct(
-					[0.0f, 1.0f, 2.0f,
-						3.0f, 4.0f, 5.0f,
-						13.0f, 7.0f, 8.0f],
-					[0, 1, 2]
-				);
+				[0.0f, 1.0f, 2.0f,
+				3.0f, 4.0f, 5.0f,
+				13.0f, 7.0f, 8.0f],
+				[0, 1, 2]
+			);
 
 			for (int i = 0; i < 1000000; i++)
 			{
@@ -31,6 +33,7 @@ namespace NetCGAL
 			timer.Stop();
 			Console.WriteLine(timer.ElapsedMilliseconds);
 
+			timer.Reset();
 			timer.Start();
 			for (int i = 0; i < 1000000; i++)
 			{

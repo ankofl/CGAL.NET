@@ -25,8 +25,15 @@ extern "C" {
 	}
 
 	__declspec(dllexport) void ReleaseMesh(float* ptrFloat, int* ptrInt) {
-		delete[] ptrFloat;
-		delete[] ptrInt;
+		if (ptrFloat != nullptr) {
+			delete[] ptrFloat;
+			ptrFloat = nullptr; // Ќе об€зательно, но хороша€ практика обнулить указатель после освобождени€ пам€ти
+		}
+
+		if (ptrInt != nullptr) {
+			delete[] ptrInt;
+			ptrInt = nullptr; // “о же самое дл€ ptrInt
+		}
 	}
 }
 

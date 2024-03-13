@@ -8,5 +8,6 @@
     <ClInclude Include="Method.h" />
     <ClInclude Include="Boolean.h" />
     <ClInclude Include="MeshStruct.h" />
+    <ClInclude Include="MyOff.h" />
   </ItemGroup>
 </Project>
