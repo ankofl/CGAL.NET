@@ -6,6 +6,7 @@
 
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
 
+#include "MyOff.h"
 
 #include <fstream>
 
@@ -16,10 +17,7 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 namespace PMP = CGAL::Polygon_mesh_processing;
 
 int Boolean()
-{
-    
-    // ѕытаемс€ открыть файл
-    //std::ifstream input("C:/demo/CGAL.NET/Data/meshes/anchor_dense.off"); 
+{    
     std::ifstream input("C:/demo/CGAL.NET/Data/meshes/bunny00.off");
 
     if (!input) {
@@ -29,7 +27,7 @@ int Boolean()
     Mesh mesh1, mesh2;
     if (!input || !(input >> mesh1))
     {
-        std::cerr << "First mesh is not a valid off file." << std::endl;
+        std::cerr << "First mesh is not a valid off file." << '\n';
         return 1;
     }
     input.close();
@@ -38,6 +36,7 @@ int Boolean()
 
     if (!input || !(input >> mesh2))
     {
+
         std::cerr << "Second mesh is not a valid off file." << std::endl;
         return 1;
     }
