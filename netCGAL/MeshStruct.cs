@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace netCGAL
+namespace NetCGAL
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MeshStruct
