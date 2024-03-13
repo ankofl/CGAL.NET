@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-	  
+	  <!--<EnableDefaultCompileItems>false</EnableDefaultCompileItems>-->
+	  <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
@@ -19,18 +19,13 @@
 	  <Platforms>x64</Platforms>
 	  <Configurations>Publish</Configurations>
 
-	  <Optimize>false</Optimize>
+	  <!--<Optimize>true</Optimize>-->
+
+	  <StartupObject>NetCGAL.NetCGAL</StartupObject>
   </PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+		<None Include="..\LICENSE.md" Pack="true" PackagePath="" />
 		<None Include="..\README.md" Pack="true" PackagePath="" />
-		<Compile Include="MeshStruct.cs" />
-		<Compile Include="NetCGAL.cs" />
-
-		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>..\..\..\Program Files\Unity\Hub\Editor\2022.3.20f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
-			<Private>false</Private>
-		</Reference>
 	</ItemGroup>
 </Project>

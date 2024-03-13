@@ -16,6 +16,7 @@
     <ProjectGuid>{364d6241-0abd-4206-905c-9cdb6dc17712}</ProjectGuid>
     <RootNamespace>cppCGAL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CppCGAL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Publish|Win32'">
