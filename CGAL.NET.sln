@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppCGAL", "CppCGAL\cppCGAL.vcxproj", "{364D6241-0ABD-4206-905C-9CDB6DC17712}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCGAL", "NetCGAL\NetCGAL.csproj", "{5D021D23-0BF8-47AC-9931-0E48EA48B97A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{364D6241-0ABD-4206-905C-9CDB6DC17712}.Release|Any CPU.Build.0 = Publish|x64
 		{364D6241-0ABD-4206-905C-9CDB6DC17712}.Release|x64.ActiveCfg = Publish|x64
 		{364D6241-0ABD-4206-905C-9CDB6DC17712}.Release|x64.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Debug|Any CPU.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Debug|Any CPU.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Debug|x64.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Debug|x64.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Publish|Any CPU.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Publish|Any CPU.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Publish|x64.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Publish|x64.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Release|Any CPU.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Release|Any CPU.Build.0 = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Release|x64.ActiveCfg = Publish|x64
+		{5D021D23-0BF8-47AC-9931-0E48EA48B97A}.Release|x64.Build.0 = Publish|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
