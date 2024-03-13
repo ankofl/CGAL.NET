@@ -1,8 +1,9 @@
 #pragma once
 
 struct MeshStruct {
-    float* Points;
+    float* Floats;
     int* Indexes;
-    int PointsCount;  // Добавлено для хранения длины массива Points
+
+    int FloatsCount;  // Добавлено для хранения длины массива Floats
     int IndexesCount; // Добавлено для хранения длины массива Indexes
 };
