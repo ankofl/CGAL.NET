@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="MeshStruct.cpp" />
+    <ClCompile Include="SoupStruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boolean.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="Exit.h" />
     <ClInclude Include="MeshStruct.h" />
     <ClInclude Include="Method.h" />
+    <ClInclude Include="SoupStruct.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

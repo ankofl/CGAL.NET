@@ -50,8 +50,10 @@ namespace NetCGAL
 				Floats = new float[CountFloats];
 				Marshal.Copy(PtrFloats, Floats, 0, CountFloats);
 
-				Indexes = new int[Indexes.Length];
+				Indexes = new int[CountIndexes];
 				Marshal.Copy(PtrIndexes, Indexes, 0, CountIndexes);
+
+				PtrClear();
 			}
 			else
 			{

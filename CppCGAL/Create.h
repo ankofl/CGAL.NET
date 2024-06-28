@@ -7,6 +7,8 @@
 #include <array>
 #include <iostream>
 #include <vector>
+#include "SoupStruct.h"
+#include "SoupStruct.h"
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef K::FT                                                   FT;
 typedef K::Point_3                                              Point_3;
@@ -35,23 +37,28 @@ struct Array_traits
         }
     };
 
-    Equal_3 equal_3_object() const { return Equal_3(); }
+    Equal_3 equal_3_object() const { 
+        return Equal_3(); 
+    }
 
-    Less_xyz_3 less_xyz_3_object() const { return Less_xyz_3(); }
+    Less_xyz_3 less_xyz_3_object() const { 
+        return Less_xyz_3(); 
+    }
 };
 
-int Create()
+int GoRefine(SoupStruct soup)
 {
     // First, construct a polygon soup with some problems
     std::vector<std::array<FT, 3> > points;
-    std::vector<CGAL_Polygon> polygons;
-    points.push_back(CGAL::make_array<FT>(0, 0, 0)); // 0
+    points.push_back(CGAL::make_array<FT>(0.3, 0.3, 0.5)); // 0
     points.push_back(CGAL::make_array<FT>(1, 0, 0)); // 1
     points.push_back(CGAL::make_array<FT>(0, 1, 0)); // 2
     points.push_back(CGAL::make_array<FT>(-1, 0, 0)); // 3
     points.push_back(CGAL::make_array<FT>(0, -1, 0)); // 4
     points.push_back(CGAL::make_array<FT>(0, 1, 0)); // 5 -- duplicate point with 2
     points.push_back(CGAL::make_array<FT>(0, -2, 0)); // 6 -- unused point
+
+    std::vector<CGAL_Polygon> polygons;
     // normal face
     polygons.push_back({ 0,1,2 });
     // degenerate face
@@ -65,11 +72,9 @@ int Create()
     polygons.push_back({ 0,3,0 });
     // normal face
     polygons.push_back({ 0,3,4 });
-#ifndef CGAL_USE_ARRAY_POLYGONS_IN_EXAMPLE
     // pinched and degenerate face
     polygons.push_back({ 0,1,2,3,4,3,2,1 });
-    std::cout << "\npinched and degenerate face\n";
-#endif
+
     std::cout << "Before repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
     PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
     std::cout << "After repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
@@ -78,9 +83,10 @@ int Create()
     PMP::polygon_soup_to_polygon_mesh(points, polygons, mesh);
     std::cout << "Mesh has " << num_vertices(mesh) << " vertices and " << num_faces(mesh) << " faces" << std::endl;
 
-    assert(num_vertices(mesh) == 5);
+    CGAL::Iterator_range<MyMesh::Edge_iterator> qq = mesh.edges();
 
-    assert(num_faces(mesh) == 4);
 
+    /*SoupStruct soupRefined;
+    soupRefined.Floats = */
     return 0;
 }
