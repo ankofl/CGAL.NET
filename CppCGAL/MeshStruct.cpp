@@ -1,26 +1,29 @@
-#include <iostream>
 #include "MeshStruct.h"
+#include <iostream>
 
 extern "C" {
-	__declspec(dllexport) int ProcessMesh(
-		MeshStruct mesh,
-		MeshStruct* meshOut )
-	{
+	__declspec(dllexport) int ProcessMesh(MeshStruct mesh, MeshStruct* meshOut) {
+		bool d = false;
+
 		meshOut->IndexesCount = mesh.IndexesCount;
 		meshOut->Indexes = new int[meshOut->IndexesCount];
 		for (int i = 0; i < meshOut->IndexesCount; i++) {
 			meshOut->Indexes[i] = mesh.Indexes[i];
-			//std::cout << meshOut->Indexes[i] << "\n";
+			if (d) {
+				std::cout << meshOut->Indexes[i] << "\n";
+			}
 		}
 
 		meshOut->FloatsCount = mesh.FloatsCount;
 		meshOut->Floats = new float[meshOut->FloatsCount];
 		for (int i = 0; i < meshOut->FloatsCount; i++) {
-			meshOut->Floats[i] = mesh.Floats[i]*3;
-			//std::cout << meshOut->Floats[i] << "\n";
+			meshOut->Floats[i] = mesh.Floats[i] * 3;
+
+			if (d) {
+				std::cout << meshOut->Floats[i] << "\n";
+			}
 		}
 
-		// Ваш код обработки данных
 		return 0;
 	}
 
@@ -35,17 +38,4 @@ extern "C" {
 			ptrInt = nullptr; // То же самое для ptrInt
 		}
 	}
-}
-
-extern "C" {
-    __declspec(dllexport) void GetFloatArray(float** array, int* size) {
-        *size = 2;
-
-        *array = new float[*size];
-
-        // Заполнение массива данными (в данном случае - просто увеличение значений)
-        for (int i = 0; i < *size; ++i) {
-            (*array)[i] = i * 1.5f;
-        }
-    }
 }

@@ -12,47 +12,23 @@ namespace NetCGAL
 	{
 		public static void Main()
 		{
-			Console.WriteLine("Started");
-
-			CallerCGAL.CallMethod();
-
-			Stopwatch timer = new();
-			timer.Start();
-			var mesh = new MeshStruct(
-				[0.0f, 1.0f, 2.0f,
-				3.0f, 4.0f, 5.0f,
-				13.0f, 7.0f, 8.0f],
-				[0, 1, 2]
-			);
-
-			for (int i = 0; i < 1000000; i++)
+			while (true)
 			{
-				MeshStruct meshOut = mesh.Multiply();
-			}
+				Console.Clear();
 
-			timer.Stop();
-			Console.WriteLine(timer.ElapsedMilliseconds);
+				//CallerCGAL.CallMethod();
 
-			timer.Reset();
-			timer.Start();
-			for (int i = 0; i < 1000000; i++)
-			{
-				var mesh2 = new MeshStruct(
-					[0.0f, 1.0f, 2.0f,
+				for(int i = 0; i < 1000000; i++)
+				{
+					var mesh = new MeshStruct(
+						[0.0f, 1.0f, 2.0f,
 						3.0f, 4.0f, 5.0f,
 						13.0f, 7.0f, 8.0f],
-					[0, 1, 2]
-				);
+						[0, 1, 2]);
 
-				MeshStruct meshOut = mesh2.Multiply();
-
-				//MeshStruct meshOut2 = meshOut.Multiply();
+					MeshStruct meshOut = mesh.Multiply();
+				}
 			}
-			timer.Stop();
-			Console.WriteLine(timer.ElapsedMilliseconds);
-
-			Console.WriteLine("Finished");
-			Console.ReadKey();
 		}
 	}
 }

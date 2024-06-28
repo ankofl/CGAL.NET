@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace NetCGAL
 {
-	[StructLayout(LayoutKind.Sequential)]
 	public struct MeshStruct
 	{
 		private IntPtr FloatsPtr;
@@ -26,7 +25,7 @@ namespace NetCGAL
 			Floats = floats;
 			Indexes = indexes;
 
-			PtrCreate();
+			//PtrCreate();
 		}
 
 		[DllImport(CallerCGAL.pathDll, CallingConvention = CallingConvention.Cdecl)]
@@ -60,7 +59,7 @@ namespace NetCGAL
 
 		private void PtrCreate()
 		{
-			if(FloatsPtr == IntPtr.Zero || IndexesPtr == IntPtr.Zero)
+			if (FloatsPtr == IntPtr.Zero && IndexesPtr == IntPtr.Zero)
 			{
 				FloatsLength = Floats.Length;
 				IndexesLength = Indexes.Length;
@@ -71,11 +70,15 @@ namespace NetCGAL
 				IndexesPtr = Marshal.AllocCoTaskMem(sizeof(int) * IndexesLength);
 				Marshal.Copy(Indexes, 0, IndexesPtr, IndexesLength);
 			}
+			else
+			{
+				throw new Exception("Fail PtrCreate");
+			}
 		}
 
 		private void PtrLoadAndClear()
 		{
-			if(FloatsPtr != IntPtr.Zero && IndexesPtr != IntPtr.Zero)
+			if (FloatsPtr != IntPtr.Zero && IndexesPtr != IntPtr.Zero)
 			{
 				Floats = new float[FloatsLength];
 				Marshal.Copy(FloatsPtr, Floats, 0, FloatsLength);
