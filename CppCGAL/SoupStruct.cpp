@@ -6,7 +6,7 @@ extern "C" {
 	__declspec(dllexport) int RefineSoup(SoupStruct soup, SoupStruct* soupOut) {
 		bool d = false;
 
-		int result = GoRefine(soup);
+		int result = Create(soup);
 		SoupStruct soupRefined;
 
 		soupOut->IndexesCount = soup.IndexesCount;

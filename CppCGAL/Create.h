@@ -8,46 +8,20 @@
 #include <iostream>
 #include <vector>
 #include "SoupStruct.h"
-#include "SoupStruct.h"
+#include "Array_traits.h"
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef K::FT                                                   FT;
 typedef K::Point_3                                              Point_3;
-typedef CGAL::Surface_mesh<Point_3>                             MyMesh;
+typedef CGAL::Surface_mesh<Point_3>                             Mesh;
 typedef std::array<FT, 3>                                       Custom_point;
-//#define CGAL_USE_ARRAY_POLYGONS_IN_EXAMPLE
-#ifdef CGAL_USE_ARRAY_POLYGONS_IN_EXAMPLE
-typedef std::array<std::size_t, 3>                              CGAL_Polygon;
-#else
 typedef std::vector<std::size_t>                                CGAL_Polygon;
-#endif
 namespace PMP = CGAL::Polygon_mesh_processing;
-struct Array_traits
+
+bool Create(SoupStruct soup)
 {
-    struct Equal_3
-    {
-        bool operator()(const Custom_point& p, const Custom_point& q) const {
-            return (p == q);
-        }
-    };
+    bool visual = false;
 
-    struct Less_xyz_3
-    {
-        bool operator()(const Custom_point& p, const Custom_point& q) const {
-            return std::lexicographical_compare(p.begin(), p.end(), q.begin(), q.end());
-        }
-    };
-
-    Equal_3 equal_3_object() const { 
-        return Equal_3(); 
-    }
-
-    Less_xyz_3 less_xyz_3_object() const { 
-        return Less_xyz_3(); 
-    }
-};
-
-int GoRefine(SoupStruct soup)
-{
     // First, construct a polygon soup with some problems
     std::vector<std::array<FT, 3> > points;
     points.push_back(CGAL::make_array<FT>(0.3, 0.3, 0.5)); // 0
@@ -75,18 +49,19 @@ int GoRefine(SoupStruct soup)
     // pinched and degenerate face
     polygons.push_back({ 0,1,2,3,4,3,2,1 });
 
-    std::cout << "Before repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
+    if (visual) {
+        std::cout << "Before repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
+    }    
     PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
-    std::cout << "After repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
-    MyMesh mesh;
+    if (visual) {
+        std::cout << "After repairing, the soup has " << points.size() << " vertices and " << polygons.size() << " faces" << std::endl;
+    }    
+    Mesh mesh;
     PMP::orient_polygon_soup(points, polygons);
     PMP::polygon_soup_to_polygon_mesh(points, polygons, mesh);
-    std::cout << "Mesh has " << num_vertices(mesh) << " vertices and " << num_faces(mesh) << " faces" << std::endl;
+    if (visual) {
+        std::cout << "Mesh has " << num_vertices(mesh) << " vertices and " << num_faces(mesh) << " faces" << std::endl;
+    }
 
-    CGAL::Iterator_range<MyMesh::Edge_iterator> qq = mesh.edges();
-
-
-    /*SoupStruct soupRefined;
-    soupRefined.Floats = */
-    return 0;
+    return true;
 }

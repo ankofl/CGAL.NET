@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace NetCGAL
 {
 	public static class CallerCGAL
-	{ 
+	{
 		public const string pathDll = "CppCGAL.dll";
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
