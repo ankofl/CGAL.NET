@@ -2,7 +2,7 @@
 #include "MyArray.h"
 
 extern "C" {
-    __declspec(dllexport) void Clear(MyArray input) {
+    __declspec(dllexport) void ClearMyArrayExtern(MyArray input) {
         if (input.floatsPtr != nullptr) {
             delete[] input.floatsPtr;
             input.floatsPtr = nullptr;
@@ -17,6 +17,7 @@ extern "C" {
         output->floatsLength = input.floatsLength * 2;
         output->floatsPtr = new float[output->floatsLength];
         if (output->floatsPtr == nullptr) {
+            delete[] output;
             return -2; // Ошибка, не удалось выделить память для массива
         }
 

@@ -21,11 +21,11 @@ namespace NetCGAL.Structs
 			Marshal.Copy(floats, 0, floatsPtr, floats.Length);
 		}
 
-		private void LoadAndClear()
+		private void LoadAndClearExtern()
 		{
 			floats = new float[floatsLength];
 			Marshal.Copy(floatsPtr, floats, 0, floatsLength);
-			Clear(this);
+			ClearMyArrayExtern(this);
 		}
 
 		[NonSerialized]
@@ -35,8 +35,9 @@ namespace NetCGAL.Structs
 		{
 			int result = CrossExtern(this, out output);
 
-			Clear(this);
-			output.LoadAndClear();
+			Marshal.FreeHGlobal(floatsPtr);
+
+			output.LoadAndClearExtern();
 
 			return result;
 		}
@@ -45,6 +46,6 @@ namespace NetCGAL.Structs
 		private static extern int CrossExtern(MyArray input, out MyArray output);
 
 		[DllImport(CallerCGAL.pathDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void Clear(MyArray input);
+		private static extern void ClearMyArrayExtern(MyArray input);
 	}
 }

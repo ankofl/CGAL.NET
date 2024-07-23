@@ -9,19 +9,31 @@ using System.Threading.Tasks;
 
 namespace NetCGAL
 {
-    public class NetCGAL
+	public class NetCGAL
 	{
 		public static void Main()
 		{
 			while (true)
 			{
-				for(int i = 0; i < 1000000; i++)
+				for (int i = 0; i < 1000000; i++)
 				{
-					MyArray myArray = new([0, 1, 2, 3]);
+					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/refined_elephant.off", out MyMesh elephant);
+					//elephant.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_re.off");
 
-					int result = myArray.Cross(out MyArray output);
+					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/bunny00.off", out MyMesh bunny);
+
+					elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
+
+					union.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_union.off");
 				}
 			}
+		}
+
+		private static void TestMyArray()
+		{
+			MyArray myArray = new([0, 1, 2, 3]);
+
+			int result = myArray.Cross(out MyArray output);
 		}
 
 		private static void Test()

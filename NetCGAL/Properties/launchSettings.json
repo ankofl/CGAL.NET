@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NetCGAL": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

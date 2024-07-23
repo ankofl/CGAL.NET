@@ -14,16 +14,23 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="MeshStruct.cpp" />
     <ClCompile Include="MyArray.cpp" />
+    <ClCompile Include="MyMesh.cpp" />
     <ClCompile Include="SoupStruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array_traits.h" />
     <ClInclude Include="Boolean.h" />
+    <ClInclude Include="ConvertToMesh.h" />
+    <ClInclude Include="ConvertToMyMesh.h" />
     <ClInclude Include="Create.h" />
+    <ClInclude Include="ExecuteBoolean.h" />
     <ClInclude Include="Exit.h" />
+    <ClInclude Include="LoadMesh.h" />
     <ClInclude Include="MeshStruct.h" />
     <ClInclude Include="Method.h" />
     <ClInclude Include="MyArray.h" />
+    <ClInclude Include="MyMesh.h" />
+    <ClInclude Include="SaveMesh.h" />
     <ClInclude Include="SoupStruct.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -41,8 +48,11 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <OutDir>$(SolutionDir)Build\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <GenerateDebugInformation>true</GenerateDebugInformation>
+    <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <!-- Игнорирование создания .lib -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -52,7 +62,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <OutDir>$(SolutionDir)Build\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
-    <!-- Игнорирование создания .lib -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -78,13 +87,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\dev\vcpkg\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <CLRSupport>true</CLRSupport>
-      <!-- Включить поддержку CLR -->
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <AdditionalLibraryDirectories>C:\dev\vcpkg\vcpkg_installed\x64-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>mpfr.lib;gmp.lib;gmpxx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
