@@ -10,20 +10,41 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCGAL", "NetCGAL\NetCGAL.
 		{B808223B-10C8-427C-9CE8-FB7C15990CEF} = {B808223B-10C8-427C-9CE8-FB7C15990CEF}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppCGAL", "AppCGAL\AppCGAL.csproj", "{FAD527E0-FF7F-4202-B678-2DD50C9001D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41} = {7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Debug|Any CPU.Build.0 = Debug|x64
 		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Debug|x64.ActiveCfg = Debug|x64
 		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Debug|x64.Build.0 = Debug|x64
+		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Release|Any CPU.ActiveCfg = Release|x64
+		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Release|Any CPU.Build.0 = Release|x64
 		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Release|x64.ActiveCfg = Release|x64
 		{B808223B-10C8-427C-9CE8-FB7C15990CEF}.Release|x64.Build.0 = Release|x64
+		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Debug|Any CPU.Build.0 = Debug|x64
 		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Debug|x64.ActiveCfg = Debug|x64
 		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Debug|x64.Build.0 = Debug|x64
+		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Release|Any CPU.ActiveCfg = Release|x64
+		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Release|Any CPU.Build.0 = Release|x64
 		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Release|x64.ActiveCfg = Release|x64
 		{7C6F5D7F-BE1B-4782-B25E-22FFB48DCF41}.Release|x64.Build.0 = Release|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Debug|x64.ActiveCfg = Debug|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Debug|x64.Build.0 = Debug|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Release|Any CPU.ActiveCfg = Release|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Release|x64.ActiveCfg = Release|x64
+		{FAD527E0-FF7F-4202-B678-2DD50C9001D7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

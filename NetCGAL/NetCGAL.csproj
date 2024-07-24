@@ -1,30 +1,56 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <OutputPath>$(SolutionDir)\Build\</OutputPath>
-    <IntermediateOutputPath>obj\</IntermediateOutputPath>
-    <Platforms>x64</Platforms>
-    <Configurations>Debug;Release</Configurations>
-    <StartupObject>NetCGAL.NetCGAL</StartupObject>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<IntermediateOutputPath>obj\</IntermediateOutputPath>
+		<Platforms>x64</Platforms>
+		<Configurations>Debug;Release</Configurations>
+		<AssemblyName>NetCGAL</AssemblyName>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>$(SolutionDir)\Build\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <EnableNativeDebugging>true</EnableNativeDebugging>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<OutputPath>C:\dev\CGAL.NET\NetCGAL\bin\</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<EnableNativeDebugging>true</EnableNativeDebugging>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
-    <None Include="..\README.md" Pack="true" PackagePath="" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutputPath>C:\dev\CGAL.NET\NetCGAL\bin\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Res\CppCGAL.dll" />
+		<EmbeddedResource Include="Res\gmp-10.dll" />
+		<EmbeddedResource Include="Res\mpfr-6.dll" />
+
+		<None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<Target Name="CopyAssemblyToResources" BeforeTargets="BeforeBuild">
+		<ItemGroup>
+			<FilesToCopy Include="C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\gmp-10.dll" />
+			<FilesToCopy Include="C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\mpfr-6.dll" />
+			<FilesToCopy Include="C:\dev\CGAL.NET\CppCGAL\bin\CppCGAL.dll" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="Res" />
+	</Target>
+
+	<!--<Target Name="CopyAssemblyToResources" AfterTargets="Build">
+		<ItemGroup>
+			<FilesToCopy Include="C:\dev\CGAL.NET\NetCGAL\bin\NetCGAL.dll" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="..\AppCGAL\Res" />
+	</Target>-->
+	
 </Project>

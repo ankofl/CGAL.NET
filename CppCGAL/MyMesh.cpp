@@ -25,7 +25,6 @@ extern "C" {
         Mesh mesh;
         ConvertToMesh(input, mesh);
         SaveMesh(path, mesh);
-
         return 0;
     }
 

@@ -1,34 +1,14 @@
 ﻿using NetCGAL.Structs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NetCGAL
 {
-	public class NetCGAL
+	public class Tests
 	{
-		public static void Main()
-		{
-			while (true)
-			{
-				for (int i = 0; i < 1000000; i++)
-				{
-					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/refined_elephant.off", out MyMesh elephant);
-					//elephant.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_re.off");
-
-					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/bunny00.off", out MyMesh bunny);
-
-					elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
-
-					union.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_union.off");
-				}
-			}
-		}
-
 		private static void TestMyArray()
 		{
 			MyArray myArray = new([0, 1, 2, 3]);
