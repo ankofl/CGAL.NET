@@ -12,24 +12,40 @@
 		<IntermediateOutputPath>obj\</IntermediateOutputPath>
 		<Platforms>x64</Platforms>
 		<Configurations>Debug;Release</Configurations>
-		<EnableNativeDebugging>true</EnableNativeDebugging>
-
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<PublishSingleFile>true</PublishSingleFile>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<OutputPath>C:\dev\CGAL.NET\AppCGAL\bin\</OutputPath>
+		<OutputPath>bin\Debug\</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
+		<EnableNativeDebugging>true</EnableNativeDebugging>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutputPath>C:\dev\CGAL.NET\AppCGAL\bin\</OutputPath>
+		<OutputPath>bin\Release\</OutputPath>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="bin\Release\AppCGAL.deps.json" />
+	  <Content Include="bin\Release\AppCGAL.runtimeconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="bin\Release\AppCGAL.dll" />
+	  <None Include="bin\Release\AppCGAL.exe" />
+	  <None Include="bin\Release\CppCGAL.dll" />
+	  <None Include="bin\Release\gmp-10.dll" />
+	  <None Include="bin\Release\mpfr-6.dll" />
+	  <None Include="bin\Release\NetCGAL.dll" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\NetCGAL\NetCGAL.csproj" />
 	</ItemGroup>
+	
 </Project>

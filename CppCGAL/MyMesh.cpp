@@ -31,7 +31,6 @@ extern "C" {
     __declspec(dllexport) int LoadExtern(const char* path, MyMesh* output) {
         Mesh mesh;
         LoadMesh(path, mesh);
-
         ConvertToMyMesh(mesh, output);
 
         return 0;

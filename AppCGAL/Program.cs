@@ -10,18 +10,16 @@ namespace AppCGAL
 		{
 			try
 			{
-				CallerCGAL.Init();
-
 				while (true)
 				{
-					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/refined_elephant.off", out MyMesh elephant);
-					elephant.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_re.off");
+					MyMesh.Load("../data/meshes/refined_elephant.off", out MyMesh elephant);
+					elephant.Save("../data/meshes/refined_elephant_re.off");
 
-					MyMesh.Load("C:/dev/CGAL.NET/data/meshes/bunny00.off", out MyMesh bunny);
+					MyMesh.Load("../data/meshes/bunny00.off", out MyMesh bunny);
 
 					elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
 
-					union.Save("C:/dev/CGAL.NET/data/meshes/refined_elephant_union.off");
+					union.Save("../data/meshes/refined_elephant_union.off");
 				}
 			}
 			catch(Exception e)

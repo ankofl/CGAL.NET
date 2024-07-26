@@ -14,26 +14,5 @@ namespace NetCGAL
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void CallMethod();
-
-		public static void Init()
-		{
-			var assembly = Assembly.GetExecutingAssembly();
-
-			var res = nameof(NetCGAL) + ".Res.";
-
-			foreach (var resName in assembly.GetManifestResourceNames())
-			{
-				if (resName.Contains(".dll"))
-				{
-					using var stream = assembly.GetManifestResourceStream(resName) ?? throw new Exception($"NotFound: {resName}");
-
-					using var fileStream = new FileStream(resName.Replace(res, ""), FileMode.Create, FileAccess.Write);
-
-					stream.CopyTo(fileStream);
-				}
-			}
-
-			Console.WriteLine("Loaded");
-		}
 	}
 }
