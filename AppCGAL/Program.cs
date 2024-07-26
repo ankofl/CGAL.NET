@@ -12,21 +12,20 @@ namespace AppCGAL
 			{
 				while (true)
 				{
-					MyMesh.Load("../data/meshes/refined_elephant.off", out MyMesh elephant);
-					elephant.Save("../data/meshes/refined_elephant_re.off");
+					MyMesh.Load("../../data/meshes/refined_elephant.off", out MyMesh elephant);
+					elephant.Save("../../data/meshes/refined_elephant_re.off");
 
-					MyMesh.Load("../data/meshes/bunny00.off", out MyMesh bunny);
+					MyMesh.Load("../../data/meshes/bunny00.off", out MyMesh bunny);
 
 					elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
 
-					union.Save("../data/meshes/refined_elephant_union.off");
+					union.Save("../../data/meshes/refined_elephant_union.off");
 				}
 			}
 			catch(Exception e)
 			{
 				Console.WriteLine(e);
 			}
-
 			Console.ReadKey();
 		}
 	}

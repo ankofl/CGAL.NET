@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>		
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<IntermediateOutputPath>..\AppCGAL\obj\</IntermediateOutputPath>
+		<Platforms>x64</Platforms>
+		<Configurations>Debug;Release</Configurations>
+		<AssemblyName>NetCGAL</AssemblyName>		
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<OutputPath>..\AppCGAL\bin\Debug\</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<EnableNativeDebugging>true</EnableNativeDebugging>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutputPath>..\AppCGAL\bin\Release\</OutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>		
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Title>CGAL.NET</Title>
+		<Authors>ankofl</Authors>
+		<Product>CGAL.NET</Product>
+		<Description>NET wrapper for CGAL</Description>
+		<Copyright>GPLv3</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageTags>v1.0.0</PackageTags>
+		<RepositoryUrl>https://github.com/ankofl/CGAL.NET</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/ankofl/CGAL.NET</PackageProjectUrl>		
+		<NeutralLanguage>aa-DJ</NeutralLanguage>
+		<PackageId>CGAL.NET</PackageId>
+		<PackageOutputPath>..\NetCGAL\</PackageOutputPath>
+	</PropertyGroup>
+
+		<ItemGroup>
+		<Content Include="..\AppCGAL\bin\Release\CppCGAL.dll">
+		  <Pack>true</Pack>
+		  <PackagePath>runtimes\win-x64\native\</PackagePath>
+		</Content>
+	  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>
