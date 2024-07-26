@@ -15,18 +15,18 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<OutputPath>..\AppCGAL\bin\Debug\</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<EnableNativeDebugging>true</EnableNativeDebugging>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutputPath>..\AppCGAL\bin\Release\</OutputPath>	
+		<OutputPath>..\AppCGAL\bin\Release\</OutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>		
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<Title>CGAL.NET</Title>
 		<Authors>ankofl</Authors>
@@ -41,27 +41,18 @@
 		<PackageProjectUrl>https://github.com/ankofl/CGAL.NET</PackageProjectUrl>		
 		<NeutralLanguage>aa-DJ</NeutralLanguage>
 		<PackageId>CGAL.NET</PackageId>
-		<PackageOutputPath></PackageOutputPath>
+		<PackageOutputPath>..\NetCGAL\</PackageOutputPath>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<Content Include="$(OutputPath)CppCGAL.dll">
+		<ItemGroup>
+		<Content Include="..\AppCGAL\bin\Release\CppCGAL.dll">
 		  <Pack>true</Pack>
 		  <PackagePath>runtimes\win-x64\native\</PackagePath>
 		</Content>
-		<Content Include="$(OutputPath)gmp-10.dll">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\win-x64\native\</PackagePath>
-		</Content>
-		<Content Include="$(OutputPath)mpfr-6.dll">
-			<Pack>true</Pack>
-			<PackagePath>runtimes\win-x64\native\</PackagePath>
-		</Content>
-	 </ItemGroup>
+	  </ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
-	
 </Project>

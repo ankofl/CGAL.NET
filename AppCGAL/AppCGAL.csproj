@@ -23,7 +23,7 @@
 		<OutputPath>bin\Debug\</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
-		<EnableNativeDebugging>true</EnableNativeDebugging>
+		<EnableNativeDebugging>true</EnableNativeDebugging>		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -31,21 +31,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="bin\Release\AppCGAL.deps.json" />
-	  <Content Include="bin\Release\AppCGAL.runtimeconfig.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="bin\Release\AppCGAL.dll" />
-	  <None Include="bin\Release\AppCGAL.exe" />
-	  <None Include="bin\Release\CppCGAL.dll" />
-	  <None Include="bin\Release\gmp-10.dll" />
-	  <None Include="bin\Release\mpfr-6.dll" />
-	  <None Include="bin\Release\NetCGAL.dll" />
+	  <Compile Remove="bin\**" />
+	  <Compile Remove="data\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <EmbeddedResource Remove="data\**" />
+	  <None Remove="bin\**" />
+	  <None Remove="data\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\NetCGAL\NetCGAL.csproj" />
 	</ItemGroup>
-	
 </Project>
