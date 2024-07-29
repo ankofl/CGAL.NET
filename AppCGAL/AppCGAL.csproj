@@ -13,10 +13,6 @@
 		<Platforms>x64</Platforms>
 		<Configurations>Debug;Release</Configurations>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PublishSingleFile>true</PublishSingleFile>
-		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-
-		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -42,4 +38,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\NetCGAL\NetCGAL.csproj" />
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy &quot;$(TargetDir)*.dll&quot; &quot;C:/dev/HeatCool/Assets&quot; /S /E /Y" />
+	</Target>
 </Project>

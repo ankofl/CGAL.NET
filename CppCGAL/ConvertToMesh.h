@@ -30,17 +30,17 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
 
     for (int i = 0; i < myMesh.floatsLength; i+=3){
         points.push_back(CGAL::make_array<FT>(
-            myMesh.floatsPtr[i],
-            myMesh.floatsPtr[i+1],
-            myMesh.floatsPtr[i+2])); // 0
+            myMesh.floats[i],
+            myMesh.floats[i+1],
+            myMesh.floats[i+2])); // 0
     }
 
     std::vector<CGAL_Polygon> polygons;
     for (int i = 0; i < myMesh.indexesLength; i+=3){
         polygons.push_back({ 
-            myMesh.indexesPtr[i],
-            myMesh.indexesPtr[i+1],
-            myMesh.indexesPtr[i+2]});
+            myMesh.indexes[i],
+            myMesh.indexes[i+1],
+            myMesh.indexes[i+2]});
     }
 
     if (visual) {

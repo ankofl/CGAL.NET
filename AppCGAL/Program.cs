@@ -1,5 +1,4 @@
 ﻿using NetCGAL;
-using NetCGAL.Structs;
 using System.Reflection;
 
 namespace AppCGAL
@@ -12,14 +11,21 @@ namespace AppCGAL
 			{
 				while (true)
 				{
-					MyMesh.Load("../../data/meshes/refined_elephant.off", out MyMesh elephant);
-					elephant.Save("../../data/meshes/refined_elephant_re.off");
+					MyMesh.LoadLocal("C:\\dev\\data\\objects\\6854.off", out MyMesh output);
+					output.Save("C:\\dev\\data\\objects\\f6854.off");
 
-					MyMesh.Load("../../data/meshes/bunny00.off", out MyMesh bunny);
 
-					elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
+					MyMesh.Load("C:\\dev\\data\\fixed.off", out MyMesh mF);
 
-					union.Save("../../data/meshes/refined_elephant_union.off");
+					//MyMesh.Load("C:\\dev\\data\\objects\\6854.off", out MyMesh m6854);
+
+					//MyMesh.Load("../../data/meshes/refined_elephant.off", out MyMesh elephant);
+					//elephant.Save("../../data/meshes/refined_elephant_re.off");
+					//MyMesh.Load("../../data/meshes/bunny00.off", out MyMesh bunny);
+
+					//elephant.Boolean(bunny, BooleanType.Union, out MyMesh union);
+
+					//union.Save("../../data/meshes/refined_elephant_union.off");
 				}
 			}
 			catch(Exception e)
