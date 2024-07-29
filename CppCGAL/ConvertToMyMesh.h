@@ -23,12 +23,11 @@ int ConvertToMyMesh(Mesh& input, MyMesh* output)
     }
 
     int num_vertices = pointIndexMap.size();
-    std::cout << "Number of unique vertices: " << num_vertices << std::endl;
 
-    output->indexesPtr = new int[input.size_of_facets() * 3];
+    output->indexes = new int[input.size_of_facets() * 3];
     output->indexesLength = input.size_of_facets() * 3;
 
-    output->floatsPtr = new double[num_vertices * 3];
+    output->floats = new double[num_vertices * 3];
     output->floatsLength = num_vertices * 3;
 
     // Fill vertex coordinates
@@ -36,9 +35,9 @@ int ConvertToMyMesh(Mesh& input, MyMesh* output)
         K::Point_3 point = pair.first;
         int index = pair.second;
 
-        output->floatsPtr[index * 3] = point.x();
-        output->floatsPtr[index * 3 + 1] = point.y();
-        output->floatsPtr[index * 3 + 2] = point.z();
+        output->floats[index * 3] = point.x();
+        output->floats[index * 3 + 1] = point.y();
+        output->floats[index * 3 + 2] = point.z();
     }
 
     // Fill indices for polygons
@@ -48,7 +47,7 @@ int ConvertToMyMesh(Mesh& input, MyMesh* output)
         // HC is the halfedge iterator around the facet
         do {
             K::Point_3 point = hc->vertex()->point();
-            output->indexesPtr[index++] = pointIndexMap[point];
+            output->indexes[index++] = pointIndexMap[point];
         } while (++hc != fi->facet_begin());
     }
 

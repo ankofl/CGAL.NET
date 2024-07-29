@@ -14,11 +14,11 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
 extern "C" {
     __declspec(dllexport) void ClearMyMeshExtern(MyMesh input) {
-        delete[] input.floatsPtr;
-        input.floatsPtr = nullptr;
+        delete[] input.floats;
+        input.floats = nullptr;
 
-        delete[] input.indexesPtr;
-        input.indexesPtr = nullptr;
+        delete[] input.indexes;
+        input.indexes = nullptr;
     }
 
     __declspec(dllexport) int SaveExtern(const char* path, MyMesh input) {
@@ -30,10 +30,11 @@ extern "C" {
 
     __declspec(dllexport) int LoadExtern(const char* path, MyMesh* output) {
         Mesh mesh;
-        LoadMesh(path, mesh);
-        ConvertToMyMesh(mesh, output);
-
-        return 0;
+        int gg = LoadMesh(path, mesh);
+        if (gg == 0) {
+            ConvertToMyMesh(mesh, output);
+        }       
+        return gg;
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh* output) {

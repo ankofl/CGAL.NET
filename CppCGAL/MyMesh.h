@@ -1,8 +1,8 @@
 #pragma once
 
 struct MyMesh {
-    double* floatsPtr;
-    int* indexesPtr;
+    double* floats;
+    int* indexes;
 
     int floatsLength;
     int indexesLength;

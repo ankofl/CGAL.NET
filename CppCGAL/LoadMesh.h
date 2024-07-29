@@ -13,11 +13,14 @@ int LoadMesh(const char* path, Mesh& output) {
 
     std::ifstream input;
     input.open(path);
-    if (!input || !(input >> output))
+    if (!input)
     {
-        std::cerr << "Second mesh is not a valid off file." << std::endl;
         return 1;
     }
+    else if (!(input >> output)) {
+        return 2;
+    }
+
     input.close();
     return 0;
 }
