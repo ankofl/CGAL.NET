@@ -12,7 +12,7 @@ namespace AppCGAL
 				while (true)
 				{
 					MyMesh.LoadLocal("C:\\dev\\data\\objects\\6854.off", out MyMesh output);
-					output.Save("C:\\dev\\data\\objects\\f6854.off");
+					//output.Save("C:\\dev\\data\\objects\\f6854.off");
 
 
 					MyMesh.Load("C:\\dev\\data\\fixed.off", out MyMesh mF);

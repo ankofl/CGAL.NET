@@ -66,8 +66,8 @@
     <IntDir>..\AppCGAL\bin\Debug\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\HeatCool\Assets\CSG\</OutDir>
-    <IntDir>..\HeatCool\Assets\CSG\obj\</IntDir>
+    <OutDir>..\AppCGAL\bin\Release\</OutDir>
+    <IntDir>..\AppCGAL\bin\Release\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -78,6 +78,7 @@
       <AdditionalIncludeDirectories>C:\dev\vcpkg\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +110,7 @@
       <AdditionalDependencies>mpfr.lib;gmp.lib;gmpxx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /I "C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\gmp-10.dll" "..\HeatCool\Assets\CSG\" &amp;&amp; xcopy /Y /I "C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\mpfr-6.dll" "..\HeatCool\Assets\CSG\"</Command>
+      <Command>xcopy /Y /I "C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\gmp-10.dll" "..\HeatCool\Assets\CSG\" &amp;&amp; xcopy /Y /I "C:\dev\vcpkg\vcpkg_installed\x64-windows\bin\mpfr-6.dll" "..\HeatCool\Assets\CSG\"  &amp;&amp; xcopy /Y /I "$(TargetPath)" "..\HeatCool\Assets\CSG\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
