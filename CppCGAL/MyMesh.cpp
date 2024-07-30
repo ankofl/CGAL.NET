@@ -8,9 +8,12 @@
 #include "LoadMesh.h"
 #include "ConvertToMyMesh.h"
 #include "SaveMesh.h"
+#include "SplitMesh.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
+
+//"C:\\dev\\data\\objects\\rooms.off"
 
 extern "C" {
     __declspec(dllexport) void ClearMyMeshExtern(MyMesh input) {
@@ -52,4 +55,28 @@ extern "C" {
 
         return 0;
     }
+
+	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMesh** outputArray, int* outputLength) {
+
+		//Mesh mesh;
+		//ConvertToMesh(myMesh, mesh);
+		//std::vector<Mesh> components;
+		//int count = SplitMesh(mesh, components);
+
+
+        int size = 10;
+        *outputArray = new MyMesh[size];
+        *outputLength = size;
+
+        for (int i = 0; i < size; ++i)
+        {
+            (*outputArray)[i].floats = new double[size];
+            (*outputArray)[i].indexes = new int[size];
+            (*outputArray)[i].floatsLength = size;
+            (*outputArray)[i].indexesLength = size;
+        }
+
+
+        return 0;
+	}
 }

@@ -24,7 +24,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutputPath>..\HeatCool\Assets\CSG\</OutputPath>	
+		<OutputPath>..\AppCGAL\bin\Release\</OutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>		
 	</PropertyGroup>
 	
