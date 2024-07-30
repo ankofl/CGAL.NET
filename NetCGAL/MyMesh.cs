@@ -137,7 +137,7 @@ namespace NetCGAL
 			return true;
 		}
 
-		public int Boolean(MyMesh other, BooleanType type, out MyMesh output)
+		public bool Boolean(MyMesh other, BooleanType type, out MyMesh output)
 		{
 			Prepare();
 			other.Prepare();
@@ -147,11 +147,35 @@ namespace NetCGAL
 
 			ClearLocal();
 			other.ClearLocal();
-			return resut;
+			return resut == 0;
 		}
 
+		public bool Split(out List<MyMesh> meshes)
+		{
+			meshes = [];
+
+			Prepare();
+
+			IntPtr outputArrayPtr;
+			int outputLength;
+
+			int code = SplitExtern(this, out outputArrayPtr, out outputLength);
+
+			for (int i = 0; i < outputLength; i++)
+			{
+				IntPtr currentPtr = Marshal.ReadIntPtr(outputArrayPtr, i * Marshal.SizeOf(typeof(MyMesh)));
+				MyMesh mesh = Marshal.PtrToStructure<MyMesh>(currentPtr);
+				meshes.Add(mesh);
+			}
+
+			ClearLocal();
+
+			return meshes.Count > 0;
+		}
+
+
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, out MyMesh output);
+		private static extern int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, out MyMesh output);
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern void ClearMyMeshExtern(MyMesh input);
@@ -161,6 +185,9 @@ namespace NetCGAL
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern int SaveExtern(string path, MyMesh input);
+
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int SplitExtern(MyMesh myMesh, out IntPtr outputArray, out int outputLength);
 
 		private const string pathDll = "CppCGAL.dll";
 	}
