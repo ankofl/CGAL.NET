@@ -1,4 +1,5 @@
 ﻿using NetCGAL;
+using System.Globalization;
 using System.Reflection;
 
 namespace AppCGAL
@@ -7,15 +8,22 @@ namespace AppCGAL
 	{
 		public static void Main()
 		{
+			Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
 			try
 			{
 				while (true)
 				{
-					MyMesh.LoadLocal("C:\\dev\\data\\objects\\6854.off", out MyMesh output);
-					//output.Save("C:\\dev\\data\\objects\\f6854.off");
+					MyMesh.LoadLocal("C:\\dev\\data\\objects\\6854.off", out MyMesh m6854);
+					m6854.Save("C:\\dev\\data\\objects\\f6854.off");
 
+					MyMesh.LoadLocal("C:\\dev\\data\\objects\\7397.off", out MyMesh m7397);
+					m7397.Save("C:\\dev\\data\\objects\\f7397.off");
 
-					MyMesh.Load("C:\\dev\\data\\fixed.off", out MyMesh mF);
+					m6854.Boolean(m7397, BooleanType.Union, out MyMesh union);
+					union.Save("C:\\dev\\data\\objects\\union.off");
+
+					//MyMesh.Load("C:\\dev\\data\\fixed.off", out MyMesh mF);
 
 					//MyMesh.Load("C:\\dev\\data\\objects\\6854.off", out MyMesh m6854);
 
