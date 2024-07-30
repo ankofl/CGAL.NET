@@ -19,11 +19,13 @@
 		<OutputPath>bin\Debug\</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
-		<EnableNativeDebugging>true</EnableNativeDebugging>		
+		<EnableNativeDebugging>true</EnableNativeDebugging>
+		<DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 		<OutputPath>bin\Release\</OutputPath>
+		<DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
