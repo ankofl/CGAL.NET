@@ -152,25 +152,16 @@ namespace NetCGAL
 
 		public bool Split(out List<MyMesh> meshes)
 		{
-			meshes = [];
-
+			meshes = null;
+			int code = -1;
 			Prepare();
 
-			IntPtr outputArrayPtr;
-			int outputLength;
-
-			int code = SplitExtern(this, out outputArrayPtr, out outputLength);
-
-			for (int i = 0; i < outputLength; i++)
-			{
-				IntPtr currentPtr = Marshal.ReadIntPtr(outputArrayPtr, i * Marshal.SizeOf(typeof(MyMesh)));
-				MyMesh mesh = Marshal.PtrToStructure<MyMesh>(currentPtr);
-				meshes.Add(mesh);
-			}
+			code = SplitExtern(this, out MyMeshList myMeshList);
+			myMeshList.LoadAndClear(out meshes);
 
 			ClearLocal();
 
-			return meshes.Count > 0;
+			return code == 0;
 		}
 
 
@@ -187,8 +178,8 @@ namespace NetCGAL
 		private static extern int SaveExtern(string path, MyMesh input);
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int SplitExtern(MyMesh myMesh, out IntPtr outputArray, out int outputLength);
+		public static extern int SplitExtern(MyMesh myMesh, out MyMeshList myMeshList);
 
-		private const string pathDll = "CppCGAL.dll";
+		public const string pathDll = "CppCGAL.dll";
 	}
 }

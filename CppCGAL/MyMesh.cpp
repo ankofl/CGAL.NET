@@ -9,6 +9,11 @@
 #include "ConvertToMyMesh.h"
 #include "SaveMesh.h"
 #include "SplitMesh.h"
+#include "MyMeshList.h"
+#include "ToMyMeshList.h"
+#include "ClearMyMesh.h"
+
+#include "MyTimer.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
@@ -17,11 +22,7 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
 extern "C" {
     __declspec(dllexport) void ClearMyMeshExtern(MyMesh input) {
-        delete[] input.floats;
-        input.floats = nullptr;
-
-        delete[] input.indexes;
-        input.indexes = nullptr;
+        ClearMyMesh(input);
     }
 
     __declspec(dllexport) int SaveExtern(const char* path, MyMesh input) {
@@ -31,7 +32,7 @@ extern "C" {
         return 0;
     }
 
-    __declspec(dllexport) int LoadExtern(const char* path, MyMesh* output) {
+    __declspec(dllexport) int LoadExtern(const char* path, MyMesh output) {
         Mesh mesh;
         int gg = LoadMesh(path, mesh);
         if (gg == 0) {
@@ -40,7 +41,7 @@ extern "C" {
         return gg;
     }
 
-    __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh* output) {
+    __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
 
         Mesh oneMesh;
         ConvertToMesh(one, oneMesh);
@@ -56,26 +57,23 @@ extern "C" {
         return 0;
     }
 
-	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMesh** outputArray, int* outputLength) {
+	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMeshList myMeshList) {
+		Mesh mesh;
+		ConvertToMesh(myMesh, mesh);
 
-		//Mesh mesh;
-		//ConvertToMesh(myMesh, mesh);
-		//std::vector<Mesh> components;
-		//int count = SplitMesh(mesh, components);
+		std::vector<Mesh> components;
+		int count = SplitMesh(mesh, components);      
 
+        std::vector<MyMesh> meshes;
 
-        int size = 10;
-        *outputArray = new MyMesh[size];
-        *outputLength = size;
-
-        for (int i = 0; i < size; ++i)
+        for (size_t i = 0; i < count; i++)
         {
-            (*outputArray)[i].floats = new double[size];
-            (*outputArray)[i].indexes = new int[size];
-            (*outputArray)[i].floatsLength = size;
-            (*outputArray)[i].indexesLength = size;
+            MyMesh pnt;
+            ConvertToMyMesh(components[i], pnt);
+            meshes.push_back(pnt);
         }
 
+        ToMyMeshList(meshes, myMeshList);
 
         return 0;
 	}

@@ -1,3 +1,4 @@
+#pragma once
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <vector>
 #include "MyMesh.h"
@@ -13,7 +14,7 @@ typedef Mesh::Vertex_handle Vertex_handle;
 typedef Mesh::Vertex_iterator Vertex_iterator;
 typedef Mesh::Facet_iterator Facet_iterator;
 
-int ConvertToMyMesh(Mesh& input, MyMesh* output)
+int ConvertToMyMesh(Mesh& input, MyMesh& output)
 {
     std::map<K::Point_3, int> pointIndexMap;
     int vertex_id = 0;
@@ -24,20 +25,20 @@ int ConvertToMyMesh(Mesh& input, MyMesh* output)
 
     int num_vertices = pointIndexMap.size();
 
-    output->indexes = new int[input.size_of_facets() * 3];
-    output->indexesLength = input.size_of_facets() * 3;
+    output.indexes = new int[input.size_of_facets() * 3];
+    output.indexesLength = input.size_of_facets() * 3;
 
-    output->floats = new double[num_vertices * 3];
-    output->floatsLength = num_vertices * 3;
+    output.floats = new double[num_vertices * 3];
+    output.floatsLength = num_vertices * 3;
 
     // Fill vertex coordinates
     for (const auto& pair : pointIndexMap) {
         K::Point_3 point = pair.first;
         int index = pair.second;
 
-        output->floats[index * 3] = point.x();
-        output->floats[index * 3 + 1] = point.y();
-        output->floats[index * 3 + 2] = point.z();
+        output.floats[index * 3] = point.x();
+        output.floats[index * 3 + 1] = point.y();
+        output.floats[index * 3 + 2] = point.z();
     }
 
     // Fill indices for polygons
@@ -47,7 +48,7 @@ int ConvertToMyMesh(Mesh& input, MyMesh* output)
         // HC is the halfedge iterator around the facet
         do {
             K::Point_3 point = hc->vertex()->point();
-            output->indexes[index++] = pointIndexMap[point];
+            output.indexes[index++] = pointIndexMap[point];
         } while (++hc != fi->facet_begin());
     }
 
