@@ -14,6 +14,8 @@
 #include "ClearMyMesh.h"
 
 #include "MyTimer.h"
+#include "Remesher.h"
+#include "ConvertToSurface.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
@@ -39,6 +41,19 @@ extern "C" {
             ConvertToMyMesh(mesh, output);
         }       
         return gg;
+    }
+
+    __declspec(dllexport) int RemeshExtern(MyMesh one, double size, double dist, MyMesh output) {
+
+        SurfaceMesh surface;
+        ConvertToSurface(one, surface);
+
+        Mesh mesh;
+        Remesher(surface, size, dist, mesh);        
+
+        ConvertToMyMesh(mesh, output);
+
+        return 0;
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {

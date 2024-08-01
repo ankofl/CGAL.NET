@@ -1,6 +1,7 @@
 ﻿using NetCGAL;
 using System.Globalization;
 using System.Reflection;
+using Debug = NetCGAL.Utils.MyDebugUtils;
 
 namespace AppCGAL
 {
@@ -14,19 +15,7 @@ namespace AppCGAL
 			{
 				while (true)
 				{
-					string folder = "C:\\dev\\data\\objects\\";
-					if (MyMesh.LoadLocal(folder + "rooms.off", out MyMesh rooms))
-					{
-						if (rooms.Split(out List<MyMesh> splitted))
-						{
-							for (int i = 0; i < splitted.Count; i++)
-							{
-								MyMesh room = splitted[i];
-								room.Save($"{folder}room-{i}.off");
-							}
-						}
-					}
-					Console.ReadKey();
+					Samples.Test3();					
 				}				
 			}
 			catch (Exception e)
