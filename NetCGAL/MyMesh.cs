@@ -28,6 +28,9 @@ namespace NetCGAL
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
 		private int[] arrayInt;
 
+		[MarshalAs(UnmanagedType.BStr, SizeConst = 1)]
+		public string Name = "";
+
 		public MyMesh(double[] arrayDouble, int[] arrayInt)
 		{
 			this.arrayDouble = arrayDouble;
@@ -90,6 +93,7 @@ namespace NetCGAL
 			int code = LoadExtern(path, out myMesh);
 			if(code == 0)
 			{
+				myMesh.Name = path.Split('\\').Last();
 				myMesh.LoadAndClear();
 			}			
 			return code == 0;
@@ -129,12 +133,40 @@ namespace NetCGAL
 			return false;			
 		}
 
+		public static bool Load(string dir, out List<MyMesh> meshes)
+		{
+			meshes = [];
+
+			var files = Directory.EnumerateFiles(dir).Where(f => f.EndsWith(".off")).ToList();
+			foreach (var off in files)
+			{
+				if (MyMesh.Load(off, out MyMesh loaded))
+				{
+					meshes.Add(loaded);
+				}
+			}
+			return meshes.Count > 0;
+		}
+
 		public bool Save(string path)
 		{
 			Prepare();
 			SaveExtern(path, this);
 			ClearLocal();
 			return true;
+		}
+
+		public bool Remesh(double size, double dist, out MyMesh remeshed)
+		{
+			Prepare();
+
+			int code = RemeshExtern(this, size, dist, out remeshed);
+
+			remeshed.LoadAndClear();
+
+			ClearLocal();
+
+			return code == 0;
 		}
 
 		public bool Boolean(MyMesh other, BooleanType type, out MyMesh output)
@@ -164,6 +196,8 @@ namespace NetCGAL
 			return code == 0;
 		}
 
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern int RemeshExtern(MyMesh one, double size, double dist, out MyMesh output);
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, out MyMesh output);

@@ -20,13 +20,16 @@
     <ClInclude Include="ConvertMyMeshListToVectorMyMesh.h" />
     <ClInclude Include="ConvertToMesh.h" />
     <ClInclude Include="ConvertToMyMesh.h" />
+    <ClInclude Include="ConvertToSurface.h" />
     <ClInclude Include="ExecuteBoolean.h" />
     <ClInclude Include="LoadMesh.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="MyMeshList.h" />
     <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="Remesher.h" />
     <ClInclude Include="SaveMesh.h" />
     <ClInclude Include="SplitMesh.h" />
+    <ClInclude Include="SurfaceToMesh.h" />
     <ClInclude Include="ToMyMeshList.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -86,6 +89,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <SupportJustMyCode>false</SupportJustMyCode>
+      <PreprocessorDefinitions>CGAL_EIGEN3_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,6 +111,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\dev\vcpkg\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>CGAL_EIGEN3_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

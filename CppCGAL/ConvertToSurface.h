@@ -14,29 +14,29 @@
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 
-typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
+typedef CGAL::Surface_mesh<K::Point_3>                        SurfaceMesh;
 
 typedef std::vector<int>                                CGAL_Polygon;
 
 namespace PMP = CGAL::Polygon_mesh_processing;
 
-int ConvertToMesh(MyMesh& myMesh, Mesh& output)
+int ConvertToSurface(MyMesh& myMesh, SurfaceMesh& output)
 {
     std::vector<std::array<FT, 3> > points;
 
-    for (int i = 0; i < myMesh.floatsLength; i+=3){
+    for (int i = 0; i < myMesh.floatsLength; i += 3) {
         points.push_back(CGAL::make_array<FT>(
             myMesh.floats[i],
-            myMesh.floats[i+1],
-            myMesh.floats[i+2])); // 0
+            myMesh.floats[i + 1],
+            myMesh.floats[i + 2])); // 0
     }
 
     std::vector<CGAL_Polygon> polygons;
-    for (int i = 0; i < myMesh.indexesLength; i+=3){
-        polygons.push_back({ 
+    for (int i = 0; i < myMesh.indexesLength; i += 3) {
+        polygons.push_back({
             myMesh.indexes[i],
-            myMesh.indexes[i+1],
-            myMesh.indexes[i+2]});
+            myMesh.indexes[i + 1],
+            myMesh.indexes[i + 2] });
     }
 
     PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Polyhedron_3.h>
@@ -8,7 +9,6 @@
 #include <array>
 #include <vector>
 #include "Array_traits.h"
-#include "MyMesh.h"
 #include <CGAL/Polyhedron_items_with_id_3.h>
 //#include "Remesher.h"
 
@@ -16,27 +16,29 @@ typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
-typedef std::vector<int>                                CGAL_Polygon;
+typedef CGAL::Surface_mesh<K::Point_3>                        SurfaceMesh;
 
 namespace PMP = CGAL::Polygon_mesh_processing;
 
-int ConvertToMesh(MyMesh& myMesh, Mesh& output)
+int SurfaceToMesh(SurfaceMesh& surface, Mesh& output)
 {
     std::vector<std::array<FT, 3> > points;
-
-    for (int i = 0; i < myMesh.floatsLength; i+=3){
+    for (auto v : surface.vertices()) {
+        auto p = surface.point(v);
         points.push_back(CGAL::make_array<FT>(
-            myMesh.floats[i],
-            myMesh.floats[i+1],
-            myMesh.floats[i+2])); // 0
+            p.x(), p.y(), p.z()));
     }
 
-    std::vector<CGAL_Polygon> polygons;
-    for (int i = 0; i < myMesh.indexesLength; i+=3){
-        polygons.push_back({ 
-            myMesh.indexes[i],
-            myMesh.indexes[i+1],
-            myMesh.indexes[i+2]});
+    // Получение индексов вершин треугольников
+    std::vector<std::array<std::size_t, 3>> polygons;
+    for (auto f : surface.faces()) {
+        auto hf = surface.halfedge(f);
+        std::array<std::size_t, 3> triangle;
+        for (int i = 0; i < 3; ++i) {
+            triangle[i] = surface.target(hf).idx();
+            hf = surface.next(hf);
+        }
+        polygons.push_back(triangle);
     }
 
     PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));

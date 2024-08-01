@@ -43,6 +43,7 @@ int ConvertToMyMesh(Mesh& input, MyMesh& output)
 
     // Fill indices for polygons
     int index = 0;
+
     for (auto fi = input.facets_begin(); fi != input.facets_end(); ++fi) {
         auto hc = fi->facet_begin();
         // HC is the halfedge iterator around the facet
