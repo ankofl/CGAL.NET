@@ -4,48 +4,38 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Debug = NetCGAL.Utils.MyDebugUtils;
+using System.Xml.Linq;
 
 namespace NetCGAL.Utils
 {
 	public static class MyMeshUtils
 	{
-		public static bool Union(this List<MyMesh> meshes, out MyMesh first)
+		public static bool UnionMeshes(this List<MyMesh> meshes, out MyMesh first, out List<MyMesh> errors)
 		{
+			errors = [];
 			first = meshes[0];
-
-			Debug.ClearLog();
 
 			for (int i = 1; i < meshes.Count; i++)
 			{
-				if (Debug.bugs.Contains(i))
-				{
-					string oneName = $"one{i}.off";
-					string twoName = $"two{i}.off";
-					first.Save(Debug.logFolder + oneName);
-					//first.Display(oneName);
-					meshes[i].Save(Debug.logFolder + twoName);
-					Debug.AddLog($"{Debug.Now()} error {i}");
-					continue;
-				}
+				MyMesh cur = meshes[i];
 
-				if (first.Boolean(meshes[i], BooleanType.Union, out var union))
+				MyDebugUtils.AddLog(cur.Name);
+
+				try
 				{
-					Debug.AddLog($"{Debug.Now()} true {i}");
-					first = union;
+					if (first.Boolean(meshes[i], BooleanType.Union, out var union))
+					{
+						first = union;
+					}
 				}
-				else
+				catch
 				{
-					Debug.AddLog($"{Debug.Now()} false {i}");
-				}
+					errors.Add(cur);
+					MyDebugUtils.AddLog(cur.Name + "error");
+				}				
 			}
 
-			return first.Valid();
-		}
-
-		public static bool Valid(this MyMesh myMesh)
-		{
-			return myMesh.GetIndexes().Length > 0;
+			return errors.Count == 0;
 		}
 
 		public static bool Save(this List<MyMesh> meshes, string dir)
@@ -72,6 +62,16 @@ namespace NetCGAL.Utils
 			catch { }
 
 			return false;
+		}
+
+		public static List<List<MyMesh>> Split(this List<MyMesh> source, int chunkSize)
+		{
+			List<List<MyMesh>> chunks = [];
+			for (int i = 0; i < source.Count; i += chunkSize)
+			{
+				chunks.Add(source.GetRange(i, Math.Min(chunkSize, source.Count - i)));
+			}
+			return chunks;
 		}
 	}
 }

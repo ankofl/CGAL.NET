@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetCGAL.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -133,18 +134,34 @@ namespace NetCGAL
 			return false;			
 		}
 
-		public static bool Load(string dir, out List<MyMesh> meshes)
+		public static bool LoadDir(string dir, out List<MyMesh> meshes)
 		{
 			meshes = [];
 
 			var files = Directory.EnumerateFiles(dir).Where(f => f.EndsWith(".off")).ToList();
-			foreach (var off in files)
+			for (int i = 0; i < files.Count; i++)
 			{
-				if (MyMesh.Load(off, out MyMesh loaded))
+				try
 				{
-					meshes.Add(loaded);
+					if (Load(files[i], out MyMesh loaded))
+					{
+						meshes.Add(loaded);
+
+						try
+						{
+							loaded.Save($"{dir}remeshed\\{loaded.Name}");
+						}
+						catch { }
+					}
+					Console.WriteLine($"{i + 1}/{files.Count}");
 				}
+				catch
+				{
+					Console.WriteLine($"{i + 1}/{files.Count} error");
+				}
+				
 			}
+			Console.WriteLine($"end cs");
 			return meshes.Count > 0;
 		}
 
@@ -156,13 +173,26 @@ namespace NetCGAL
 			return true;
 		}
 
-		public bool Remesh(double size, double dist, out MyMesh remeshed)
+		public bool Fix(out MyMesh fixing)
 		{
 			Prepare();
 
-			int code = RemeshExtern(this, size, dist, out remeshed);
+			int code = FixExtern(this, out fixing);
 
-			remeshed.LoadAndClear();
+			fixing.LoadAndClear();
+
+			ClearLocal();
+
+			return code == 0;
+		}
+
+		public bool Remesh(out MyMesh fixing, double length = 0.05, int iterations = 3)
+		{
+			Prepare();
+
+			int code = RemeshExtern(this, length, iterations, out fixing);
+
+			fixing.LoadAndClear();
 
 			ClearLocal();
 
@@ -172,7 +202,7 @@ namespace NetCGAL
 		public bool Boolean(MyMesh other, BooleanType type, out MyMesh output)
 		{
 			Prepare();
-			other.Prepare();
+			other.Prepare();			
 
 			int resut = BooleanExtern(this, other, type, out output);
 			output.LoadAndClear();
@@ -197,7 +227,11 @@ namespace NetCGAL
 		}
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int RemeshExtern(MyMesh one, double size, double dist, out MyMesh output);
+		private static extern int RemeshExtern(MyMesh one, double target_edge_length, int number_of_iterations, out MyMesh output);
+
+
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FixExtern(MyMesh one, out MyMesh output);
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, out MyMesh output);

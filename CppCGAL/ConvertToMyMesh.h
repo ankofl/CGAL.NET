@@ -1,21 +1,39 @@
 #pragma once
+
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
-#include <vector>
-#include "MyMesh.h"
+#include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
+#include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
+#include <vector>
+#include <map>
+#include "MyMesh.h"
+#include <CGAL/property_map.h>
+#include <CGAL/Polygon_mesh_processing/orientation.h>
+#include <CGAL/Polygon_mesh_processing/repair.h>
+#include "FixMesh.h"
+#include "RemeshMesh.h"
 
-typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
-
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
-typedef std::vector<int>                                CGAL_Polygon;
+int ConvertToMyMesh(Mesh& input, MyMesh& output) {
 
-typedef Mesh::Vertex_handle Vertex_handle;
-typedef Mesh::Vertex_iterator Vertex_iterator;
-typedef Mesh::Facet_iterator Facet_iterator;
+    int code = FixMesh(input);
+    if (code == 1) {
+        std::cout << "remesh remesh" << std::endl;
+        RemeshMesh(input, 1, 1);
+        std::cout << "remesh remesh end" << std::endl;
+        code = FixMesh(input);
+        if (code != 0) {
+            std::cout << "remesh code 1" << std::endl;
+            return 1;
+        }
+    }
 
-int ConvertToMyMesh(Mesh& input, MyMesh& output)
-{
+    if (!CGAL::is_valid(input)) {        
+        return 1;
+    }
+
     std::map<K::Point_3, int> pointIndexMap;
     int vertex_id = 0;
 
@@ -43,7 +61,6 @@ int ConvertToMyMesh(Mesh& input, MyMesh& output)
 
     // Fill indices for polygons
     int index = 0;
-
     for (auto fi = input.facets_begin(); fi != input.facets_end(); ++fi) {
         auto hc = fi->facet_begin();
         // HC is the halfedge iterator around the facet
@@ -52,6 +69,5 @@ int ConvertToMyMesh(Mesh& input, MyMesh& output)
             output.indexes[index++] = pointIndexMap[point];
         } while (++hc != fi->facet_begin());
     }
-
-    return 0;
+    return 0;    
 }

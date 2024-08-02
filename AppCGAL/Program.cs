@@ -1,7 +1,8 @@
 ﻿using NetCGAL;
+using NetCGAL.Utils;
 using System.Globalization;
 using System.Reflection;
-using Debug = NetCGAL.Utils.MyDebugUtils;
+using MyDebug = NetCGAL.Utils.MyDebugUtils;
 
 namespace AppCGAL
 {
@@ -13,10 +14,7 @@ namespace AppCGAL
 
 			try
 			{
-				while (true)
-				{
-					Samples.Test3();					
-				}				
+				PMU.Run();
 			}
 			catch (Exception e)
 			{
