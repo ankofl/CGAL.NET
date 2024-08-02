@@ -20,16 +20,15 @@
     <ClInclude Include="ConvertMyMeshListToVectorMyMesh.h" />
     <ClInclude Include="ConvertToMesh.h" />
     <ClInclude Include="ConvertToMyMesh.h" />
-    <ClInclude Include="ConvertToSurface.h" />
     <ClInclude Include="ExecuteBoolean.h" />
+    <ClInclude Include="FixMesh.h" />
     <ClInclude Include="LoadMesh.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="MyMeshList.h" />
     <ClInclude Include="MyTimer.h" />
-    <ClInclude Include="Remesher.h" />
+    <ClInclude Include="RemeshMesh.h" />
     <ClInclude Include="SaveMesh.h" />
     <ClInclude Include="SplitMesh.h" />
-    <ClInclude Include="SurfaceToMesh.h" />
     <ClInclude Include="ToMyMeshList.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

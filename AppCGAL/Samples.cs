@@ -4,20 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Debug = NetCGAL.Utils.MyDebugUtils;
+using MyDebug = NetCGAL.Utils.MyDebugUtils;
 
 namespace AppCGAL
 {
 	public static class Samples
 	{
-		public static void Test3()
+		public static void DoorsTest()
 		{
-			if (MyMesh.Load("C:\\dev\\data\\Log\\two480.off", out MyMesh loaded))
+			if(MyMesh.LoadDir("C:\\dev\\data\\objects\\Doors\\", out List<MyMesh> meshes))
 			{
-				if(loaded.Remesh(10, 20, out MyMesh remeshed))
-				{
-
-				}
+				Console.ReadKey();
 			}
 		}
 
@@ -25,18 +22,18 @@ namespace AppCGAL
 		{
 			if (MyMesh.LoadLocal("C:\\dev\\data\\Log\\one480.off", out MyMesh loaded))
 			{
-				loaded.Save(Debug.logTemp + "tone480.off");
+				loaded.Save(MyDebug.logTemp + "tone480.off");
 
-				if (MyMesh.Load(Debug.logTemp + "tone480.off", out MyMesh remeshed))
+				if (MyMesh.Load(MyDebug.logTemp + "tone480.off", out MyMesh remeshed))
 				{
-					remeshed.Save(Debug.logTemp + "rone480.off");
+					remeshed.Save(MyDebug.logTemp + "rone480.off");
 				}
 			}
 		}
 
 		public static void Test2()
 		{
-			if (Debug.SplitOneTwo(out var listOne, out var listTwo))
+			if (MyDebug.SplitOneTwo(out var listOne, out var listTwo))
 			{
 				for (int i = 0; i < listOne.Count; i++)
 				{

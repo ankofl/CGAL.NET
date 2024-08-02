@@ -22,28 +22,7 @@ namespace PMP = CGAL::Polygon_mesh_processing;
 
 int SurfaceToMesh(SurfaceMesh& surface, Mesh& output)
 {
-    std::vector<std::array<FT, 3> > points;
-    for (auto v : surface.vertices()) {
-        auto p = surface.point(v);
-        points.push_back(CGAL::make_array<FT>(
-            p.x(), p.y(), p.z()));
-    }
-
-    // Получение индексов вершин треугольников
-    std::vector<std::array<std::size_t, 3>> polygons;
-    for (auto f : surface.faces()) {
-        auto hf = surface.halfedge(f);
-        std::array<std::size_t, 3> triangle;
-        for (int i = 0; i < 3; ++i) {
-            triangle[i] = surface.target(hf).idx();
-            hf = surface.next(hf);
-        }
-        polygons.push_back(triangle);
-    }
-
-    PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
-
-    PMP::orient_polygon_soup(points, polygons);
+    
 
     PMP::polygon_soup_to_polygon_mesh(points, polygons, output);
 

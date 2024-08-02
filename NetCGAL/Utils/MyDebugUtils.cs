@@ -30,7 +30,7 @@ namespace NetCGAL.Utils
 			listOne = [];
 			listTwo = [];
 
-			if(MyMesh.Load(logFolder, out List<MyMesh> meshes))
+			if(MyMesh.LoadDir(logFolder, out List<MyMesh> meshes))
 			{
 				foreach (var mesh in meshes)
 				{
@@ -60,15 +60,10 @@ namespace NetCGAL.Utils
 
 		public static void ClearLog()
 		{
-			foreach (var file in Directory.EnumerateFiles(logFolder))
-			{
-				File.Delete(file);
-			}
-
 			File.Create(logPath);
 		}
 
-		public const string logFolder = "C:\\dev\\data\\Log\\";
+		public const string logFolder = "C:\\dev\\data\\objects\\";
 		public const string logPath = logFolder + "log.txt";
 		public const string logTemp = logFolder + "Temp\\";
 	}

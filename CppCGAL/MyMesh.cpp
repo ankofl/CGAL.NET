@@ -14,8 +14,7 @@
 #include "ClearMyMesh.h"
 
 #include "MyTimer.h"
-#include "Remesher.h"
-#include "ConvertToSurface.h"
+#include "RemeshMesh.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
@@ -38,22 +37,27 @@ extern "C" {
         Mesh mesh;
         int gg = LoadMesh(path, mesh);
         if (gg == 0) {
-            ConvertToMyMesh(mesh, output);
+            gg = ConvertToMyMesh(mesh, output);
         }       
         return gg;
     }
 
-    __declspec(dllexport) int RemeshExtern(MyMesh one, double size, double dist, MyMesh output) {
-
-        SurfaceMesh surface;
-        ConvertToSurface(one, surface);
-
+    __declspec(dllexport) int FixExtern(MyMesh input, MyMesh output) {
         Mesh mesh;
-        Remesher(surface, size, dist, mesh);        
+        ConvertToMesh(input, mesh);
 
-        ConvertToMyMesh(mesh, output);
+        FixMesh(mesh);
+        
+        return ConvertToMyMesh(mesh, output);
+    }
 
-        return 0;
+    __declspec(dllexport) int RemeshExtern(MyMesh input, const double target_edge_length, const int number_of_iterations, MyMesh output) {
+        Mesh mesh;
+        ConvertToMesh(input, mesh);
+
+        RemeshMesh(mesh, target_edge_length, number_of_iterations);
+
+        return ConvertToMyMesh(mesh, output);
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
@@ -67,9 +71,7 @@ extern "C" {
         Mesh out;
         ExecuteBoolean(oneMesh, twoMesh, type, out);
 
-        ConvertToMyMesh(out, output);
-
-        return 0;
+        return ConvertToMyMesh(out, output);
     }
 
 	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMeshList myMeshList) {
@@ -84,8 +86,10 @@ extern "C" {
         for (size_t i = 0; i < count; i++)
         {
             MyMesh pnt;
-            ConvertToMyMesh(components[i], pnt);
-            meshes.push_back(pnt);
+            int code = ConvertToMyMesh(components[i], pnt);
+            if (code == 0) {
+                meshes.push_back(pnt);
+            }           
         }
 
         ToMyMeshList(meshes, myMeshList);

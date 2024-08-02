@@ -62,13 +62,10 @@
     <ClInclude Include="MyTimer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Remesher.h">
+    <ClInclude Include="FixMesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ConvertToSurface.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SurfaceToMesh.h">
+    <ClInclude Include="RemeshMesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
