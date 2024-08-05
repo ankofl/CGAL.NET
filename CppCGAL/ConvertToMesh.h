@@ -10,14 +10,10 @@
 #include "Array_traits.h"
 #include "MyMesh.h"
 #include <CGAL/Polyhedron_items_with_id_3.h>
-//#include "Remesher.h"
+#include "FixMesh.h"
 
-typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
-
+typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
-
-typedef std::vector<int>                                CGAL_Polygon;
-
 namespace PMP = CGAL::Polygon_mesh_processing;
 
 int ConvertToMesh(MyMesh& myMesh, Mesh& output)
@@ -31,7 +27,7 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
             myMesh.floats[i+2])); // 0
     }
 
-    std::vector<CGAL_Polygon> polygons;
+    std::vector<std::vector<int>> polygons;
     for (int i = 0; i < myMesh.indexesLength; i+=3){
         polygons.push_back({ 
             myMesh.indexes[i],
@@ -45,5 +41,7 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
 
     PMP::polygon_soup_to_polygon_mesh(points, polygons, output);
 
-    return 0;
+    size_t code = FixMesh(output);
+
+    return code;
 }

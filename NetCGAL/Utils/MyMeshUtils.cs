@@ -15,24 +15,31 @@ namespace NetCGAL.Utils
 			errors = [];
 			first = meshes[0];
 
-			for (int i = 1; i < meshes.Count; i++)
+			string r = "C:\\dev\\data\\objects\\building\\remeshed\\re\\";
+
+			for (int i = 0; i < meshes.Count; i++)
 			{
 				MyMesh cur = meshes[i];
 
-				MyDebugUtils.AddLog(cur.Name);
+				Console.Write($"{i + 1}/{meshes.Count} {cur.Name} -> ");
 
 				try
 				{
-					if (first.Boolean(meshes[i], BooleanType.Union, out var union))
+					if (first.Boolean(cur, BooleanType.Union, out var union))
 					{
 						first = union;
+					}
+					else
+					{
+						first.Save($"{r}{i}-one.off");
+						cur.Save($"{r}{i}-two.off");
 					}
 				}
 				catch
 				{
 					errors.Add(cur);
-					MyDebugUtils.AddLog(cur.Name + "error");
-				}				
+				}
+				Console.WriteLine();
 			}
 
 			return errors.Count == 0;

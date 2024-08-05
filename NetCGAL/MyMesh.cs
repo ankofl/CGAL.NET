@@ -65,11 +65,14 @@ namespace NetCGAL
 
 		private void LoadAndClear()
 		{
-			arrayDouble = new double[floatsLength];
-			Marshal.Copy(floatsPtr, arrayDouble, 0, floatsLength);
+			if(floatsLength > 0 && indexesLength > 0)
+			{
+				arrayDouble = new double[floatsLength];
+				Marshal.Copy(floatsPtr, arrayDouble, 0, floatsLength);
 
-			arrayInt = new int[indexesLength];
-			Marshal.Copy(indexesPtr, arrayInt, 0, indexesLength);
+				arrayInt = new int[indexesLength];
+				Marshal.Copy(indexesPtr, arrayInt, 0, indexesLength);
+			}			
 
 			ClearMyMeshExtern(this);
 
@@ -137,29 +140,33 @@ namespace NetCGAL
 		public static bool LoadDir(string dir, out List<MyMesh> meshes)
 		{
 			meshes = [];
+			var dirRemeshed = $"{dir}remeshed\\";
+
+			if (Directory.Exists(dirRemeshed))
+			{
+				Directory.Delete(dirRemeshed, true);
+			}
+			Directory.CreateDirectory(dirRemeshed);
 
 			var files = Directory.EnumerateFiles(dir).Where(f => f.EndsWith(".off")).ToList();
 			for (int i = 0; i < files.Count; i++)
 			{
+				var file = files[i];
+				Console.Write($"{i + 1}/{files.Count} {file.Split('\\').Last()} -> ");
 				try
 				{
-					if (Load(files[i], out MyMesh loaded))
+					if (Load(file, out MyMesh loaded))
 					{
 						meshes.Add(loaded);
-
-						try
-						{
-							loaded.Save($"{dir}remeshed\\{loaded.Name}");
-						}
-						catch { }
+						//loaded.Save($"{dirRemeshed}{loaded.Name}");
 					}
-					Console.WriteLine($"{i + 1}/{files.Count}");
+					
 				}
 				catch
 				{
-					Console.WriteLine($"{i + 1}/{files.Count} error");
+					Console.WriteLine($" error");
 				}
-				
+				Console.WriteLine();
 			}
 			Console.WriteLine($"end cs");
 			return meshes.Count > 0;
@@ -204,12 +211,12 @@ namespace NetCGAL
 			Prepare();
 			other.Prepare();			
 
-			int resut = BooleanExtern(this, other, type, out output);
+			int result = BooleanExtern(this, other, type, out output);
 			output.LoadAndClear();
 
 			ClearLocal();
 			other.ClearLocal();
-			return resut == 0;
+			return result == 0;
 		}
 
 		public bool Split(out List<MyMesh> meshes)

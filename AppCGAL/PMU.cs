@@ -15,11 +15,10 @@ namespace AppCGAL
 			string objs = "C:\\dev\\data\\objects\\";
 			string buildingDir = objs + "building\\";
 
-			if (MyMesh.LoadDir(buildingDir, out var loadedChunks))
-			{
-				Console.WriteLine("loaded dir");
-			}
-			return;
+			//if (MyMesh.LoadDir(buildingDir, out var loadedChunks))
+			//{
+			//	Console.WriteLine("loaded dir");
+			//}
 
 			if (Directory.Exists(buildingDir))
 			{
@@ -34,13 +33,11 @@ namespace AppCGAL
 			{
 				var chunks = constructs.Split(100);
 
-				MyDebugUtils.ClearLog();
-
 				for (int cn = 0; cn < chunks.Count; cn++)
 				{
-					if (chunks[cn].UnionMeshes(out var unitedConstr, out var errors))
+					if (chunks[cn].UnionMeshes(out var unOne, out var errors))
 					{
-						unitedConstr.Save($"{buildingDir}constructs-{cn}.off");
+						unOne.Save($"{buildingDir}constructs-{cn}.off");
 						Console.WriteLine($"saved {cn}");
 						//if (space.Boolean(unitedConstr, BooleanType.Dif, out var roomsSpace))
 						//{
@@ -62,19 +59,31 @@ namespace AppCGAL
 					}
 					else
 					{
-						unitedConstr.Save($"{buildingDir}constructs-{cn}-true.off");
-						if (errors.UnionMeshes(out unitedConstr, out errors))
+						if (errors.UnionMeshes(out var unTwo, out errors))
 						{
-							unitedConstr.Save($"{buildingDir}constructs-{cn}-errors.off");
+							try
+							{
+								if (unOne.Boolean(unTwo, BooleanType.Union, out var unThree))
+								{
+									unThree.Save($"{buildingDir}constructs-{cn}.off");
+								}
+							}
+							catch
+							{
+								unOne.Save($"{buildingDir}constructs-{cn}-one.off");
+								unTwo.Save($"{buildingDir}constructs-{cn}-two.off");
+							}						
 						}
 						else
 						{
-							foreach(var error in errors)
-							{
-								MyDebugUtils.AddLog(error.Name + "error        error");
-							}
+							throw new Exception("Re-Error union");
 						}
 					}
+				}
+
+				if(MyMesh.LoadDir(buildingDir, out var meshes))
+				{
+
 				}
 			}
 		}

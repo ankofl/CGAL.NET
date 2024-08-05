@@ -5,7 +5,7 @@
 #include <CGAL/Polyhedron_items_with_id_3.h>
 
 #include <CGAL/Polygon_mesh_processing/corefinement.h>
-
+#include "MyTimer.h"
 #include <fstream>
 
 typedef std::chrono::steady_clock::time_point TimePoint;
@@ -23,30 +23,28 @@ enum BooleanType {
 
 int ExecuteBoolean(Mesh& mesh1, Mesh& mesh2, BooleanType type, Mesh& out)
 {
-    TimePoint start_time = std::chrono::high_resolution_clock::now();
+    int code = 0;
+    TimePoint start_time = Start("");
 
     if (type == BooleanType::Union) {
         if (!PMP::corefine_and_compute_union(mesh1, mesh2, out)){
-            throw;
+            code = 1;
         }
     }
     else if (type == BooleanType::Inter) {
         if (!PMP::corefine_and_compute_intersection(mesh1, mesh2, out)){
-            throw;
+            code = 2;
         }
     }    
     else if (type == BooleanType::Dif) {
         if (!PMP::corefine_and_compute_difference(mesh1, mesh2, out)){
-            throw;
+            code = 3;
         }
     }  
     else {
-        throw;
+        code = 4;
     }
-
-    long long duration = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::high_resolution_clock::now() - start_time).count();
-
-    std::cout << "DeltaTime: " << duration << " milliseconds\n";
-    return 1;
+    std::cout << "boolean code [" << code << ']';
+    Msg("", start_time);
+    return code;
 }

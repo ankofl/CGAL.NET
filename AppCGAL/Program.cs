@@ -14,7 +14,11 @@ namespace AppCGAL
 
 			try
 			{
-				PMU.Run();
+				//PMU.Run();
+
+				//Samples.TestOneTwo();
+
+				Samples.Maniford();
 			}
 			catch (Exception e)
 			{

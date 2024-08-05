@@ -19,15 +19,8 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 int ConvertToMyMesh(Mesh& input, MyMesh& output) {
 
     int code = FixMesh(input);
-    if (code == 1) {
-        std::cout << "remesh remesh" << std::endl;
-        RemeshMesh(input, 1, 1);
-        std::cout << "remesh remesh end" << std::endl;
-        code = FixMesh(input);
-        if (code != 0) {
-            std::cout << "remesh code 1" << std::endl;
-            return 1;
-        }
+    if (code != 0) {
+        return code;
     }
 
     if (!CGAL::is_valid(input)) {        

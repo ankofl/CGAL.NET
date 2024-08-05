@@ -28,7 +28,9 @@ extern "C" {
 
     __declspec(dllexport) int SaveExtern(const char* path, MyMesh input) {
         Mesh mesh;
-        ConvertToMesh(input, mesh);
+        if (ConvertToMesh(input, mesh) != 0){
+            return 1;
+        }
         SaveMesh(path, mesh);
         return 0;
     }
@@ -45,9 +47,6 @@ extern "C" {
     __declspec(dllexport) int FixExtern(MyMesh input, MyMesh output) {
         Mesh mesh;
         ConvertToMesh(input, mesh);
-
-        FixMesh(mesh);
-        
         return ConvertToMyMesh(mesh, output);
     }
 
@@ -61,7 +60,6 @@ extern "C" {
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
-
         Mesh oneMesh;
         ConvertToMesh(one, oneMesh);
         
@@ -69,9 +67,11 @@ extern "C" {
         ConvertToMesh(two, twoMesh);
 
         Mesh out;
-        ExecuteBoolean(oneMesh, twoMesh, type, out);
-
-        return ConvertToMyMesh(out, output);
+        int code = ExecuteBoolean(oneMesh, twoMesh, type, out);
+        if (code == 0) {
+            ConvertToMyMesh(out, output);
+        }
+        return code;
     }
 
 	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMeshList myMeshList) {
@@ -85,14 +85,15 @@ extern "C" {
 
         for (size_t i = 0; i < count; i++)
         {
+            std::cout << '\n';
             MyMesh pnt;
-            int code = ConvertToMyMesh(components[i], pnt);
+            int code = ConvertToMyMesh(components[i], pnt);            
             if (code == 0) {
                 meshes.push_back(pnt);
             }           
         }
 
-        ToMyMeshList(meshes, myMeshList);
+        ToMyMeshList(meshes, myMeshList);       
 
         return 0;
 	}
