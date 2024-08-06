@@ -4,6 +4,7 @@
 #include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
 
+#include "FixMesh.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 
@@ -22,5 +23,8 @@ int LoadMesh(const char* path, Mesh& output) {
     }
 
     input.close();
-    return 0;
+
+    size_t code = FixMesh(output);
+
+    return code;
 }

@@ -1,4 +1,5 @@
 ﻿using NetCGAL;
+using NetCGAL.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,21 @@ namespace AppCGAL
 {
 	public static class Samples
 	{
+		public static void Maniford()
+		{
+			MyMesh.Load("C:\\dev\\data\\objects\\building\\remeshed\\59-one.off", out var one);
+			MyMesh.Load("C:\\dev\\data\\objects\\building\\remeshed\\59-two.off", out var two);
+
+			List<MyMesh> temp = [];
+
+			if (two.Split(out var twos))
+			{
+				temp.AddRange(twos);
+			}
+
+			//temp.UnionMeshes(out var u_1, out var u_err);
+		}
+
 		public static void DoorsTest()
 		{
 			if(MyMesh.LoadDir("C:\\dev\\data\\objects\\Doors\\", out List<MyMesh> meshes))
@@ -18,20 +34,7 @@ namespace AppCGAL
 			}
 		}
 
-		public static void Test1()
-		{
-			if (MyMesh.LoadLocal("C:\\dev\\data\\Log\\one480.off", out MyMesh loaded))
-			{
-				loaded.Save(MyDebug.logTemp + "tone480.off");
-
-				if (MyMesh.Load(MyDebug.logTemp + "tone480.off", out MyMesh remeshed))
-				{
-					remeshed.Save(MyDebug.logTemp + "rone480.off");
-				}
-			}
-		}
-
-		public static void Test2()
+		public static void TestOneTwo()
 		{
 			if (MyDebug.SplitOneTwo(out var listOne, out var listTwo))
 			{
@@ -41,6 +44,8 @@ namespace AppCGAL
 					{
 
 					}
+
+					Console.WriteLine();
 				}
 			}
 		}

@@ -65,11 +65,14 @@ namespace NetCGAL
 
 		private void LoadAndClear()
 		{
-			arrayDouble = new double[floatsLength];
-			Marshal.Copy(floatsPtr, arrayDouble, 0, floatsLength);
+			if(floatsLength > 0 && indexesLength > 0)
+			{
+				arrayDouble = new double[floatsLength];
+				Marshal.Copy(floatsPtr, arrayDouble, 0, floatsLength);
 
-			arrayInt = new int[indexesLength];
-			Marshal.Copy(indexesPtr, arrayInt, 0, indexesLength);
+				arrayInt = new int[indexesLength];
+				Marshal.Copy(indexesPtr, arrayInt, 0, indexesLength);
+			}			
 
 			ClearMyMeshExtern(this);
 
@@ -137,29 +140,23 @@ namespace NetCGAL
 		public static bool LoadDir(string dir, out List<MyMesh> meshes)
 		{
 			meshes = [];
-
 			var files = Directory.EnumerateFiles(dir).Where(f => f.EndsWith(".off")).ToList();
 			for (int i = 0; i < files.Count; i++)
 			{
+				var file = files[i];
+				Console.Write($"{i + 1}/{files.Count} {file.Split('\\').Last()} -> ");
 				try
 				{
-					if (Load(files[i], out MyMesh loaded))
+					if (Load(file, out MyMesh loaded))
 					{
 						meshes.Add(loaded);
-
-						try
-						{
-							loaded.Save($"{dir}remeshed\\{loaded.Name}");
-						}
-						catch { }
-					}
-					Console.WriteLine($"{i + 1}/{files.Count}");
+					}					
 				}
 				catch
 				{
-					Console.WriteLine($"{i + 1}/{files.Count} error");
+					Console.WriteLine($" error");
 				}
-				
+				Console.WriteLine();
 			}
 			Console.WriteLine($"end cs");
 			return meshes.Count > 0;
@@ -168,9 +165,13 @@ namespace NetCGAL
 		public bool Save(string path)
 		{
 			Prepare();
-			SaveExtern(path, this);
+			int code = SaveExtern(path, this);
+			if (code == 0)
+			{
+				Console.WriteLine($"saved {path.Split('\\').Last()}");
+			}
 			ClearLocal();
-			return true;
+			return code == 0;
 		}
 
 		public bool Fix(out MyMesh fixing)
@@ -202,14 +203,18 @@ namespace NetCGAL
 		public bool Boolean(MyMesh other, BooleanType type, out MyMesh output)
 		{
 			Prepare();
-			other.Prepare();			
+			other.Prepare();
 
-			int resut = BooleanExtern(this, other, type, out output);
-			output.LoadAndClear();
+			int result = BooleanExtern(this, other, type, out output);
+			if (result == 0)
+			{
+				output.LoadAndClear();
+			}			 
+			
 
 			ClearLocal();
 			other.ClearLocal();
-			return resut == 0;
+			return result == 0;
 		}
 
 		public bool Split(out List<MyMesh> meshes)

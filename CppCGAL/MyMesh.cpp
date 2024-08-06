@@ -28,9 +28,10 @@ extern "C" {
 
     __declspec(dllexport) int SaveExtern(const char* path, MyMesh input) {
         Mesh mesh;
-        ConvertToMesh(input, mesh);
-        SaveMesh(path, mesh);
-        return 0;
+        if (ConvertToMesh(input, mesh) != 0){
+            return 1;
+        }
+        return SaveMesh(path, mesh);
     }
 
     __declspec(dllexport) int LoadExtern(const char* path, MyMesh output) {
@@ -45,9 +46,6 @@ extern "C" {
     __declspec(dllexport) int FixExtern(MyMesh input, MyMesh output) {
         Mesh mesh;
         ConvertToMesh(input, mesh);
-
-        FixMesh(mesh);
-        
         return ConvertToMyMesh(mesh, output);
     }
 
@@ -61,17 +59,25 @@ extern "C" {
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
-
+        auto ts = Start("");
+        auto ts2 = Start("");
         Mesh oneMesh;
-        ConvertToMesh(one, oneMesh);
+        ConvertToMesh(one, oneMesh);       
+        ts = Msg("ToMesh1", ts);
         
         Mesh twoMesh;
         ConvertToMesh(two, twoMesh);
+        ts = Msg("ToMesh2", ts);
 
         Mesh out;
-        ExecuteBoolean(oneMesh, twoMesh, type, out);
-
-        return ConvertToMyMesh(out, output);
+        int code = ExecuteBoolean(oneMesh, twoMesh, type, out);
+        ts = Msg("Execute", ts);
+        if (code == 0) {
+            code = ConvertToMyMesh(out, output);
+            ts = Msg("ToMyMesh", ts);
+        }
+        Msg("total", ts2);
+        return code;
     }
 
 	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMeshList myMeshList) {
@@ -85,14 +91,15 @@ extern "C" {
 
         for (size_t i = 0; i < count; i++)
         {
+            std::cout << '\n';
             MyMesh pnt;
-            int code = ConvertToMyMesh(components[i], pnt);
+            int code = ConvertToMyMesh(components[i], pnt);            
             if (code == 0) {
                 meshes.push_back(pnt);
             }           
         }
 
-        ToMyMeshList(meshes, myMeshList);
+        ToMyMeshList(meshes, myMeshList);       
 
         return 0;
 	}

@@ -8,29 +8,12 @@ namespace NetCGAL.Utils
 {
 	public static class MyDebugUtils
 	{
-		public static void AddLog(string msg)
-		{
-			bool writed = false;
-			while (!writed)
-			{
-				try
-				{
-					File.AppendAllText(logPath, msg + '\n');
-					writed = true;
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Error append log" + msg);
-				}
-			}
-		}
-
 		public static bool SplitOneTwo(out List<MyMesh> listOne, out List<MyMesh> listTwo)
 		{
 			listOne = [];
 			listTwo = [];
 
-			if(MyMesh.LoadDir(logFolder, out List<MyMesh> meshes))
+			if(MyMesh.LoadDir(logFolder+"building\\", out List<MyMesh> meshes))
 			{
 				foreach (var mesh in meshes)
 				{
@@ -58,13 +41,6 @@ namespace NetCGAL.Utils
 			return $"{DateTime.Now:yy.MM.dd HH.mm.ss.fff}";
 		}
 
-		public static void ClearLog()
-		{
-			File.Create(logPath);
-		}
-
 		public const string logFolder = "C:\\dev\\data\\objects\\";
-		public const string logPath = logFolder + "log.txt";
-		public const string logTemp = logFolder + "Temp\\";
 	}
 }
