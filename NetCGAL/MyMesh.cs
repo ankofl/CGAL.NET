@@ -140,14 +140,6 @@ namespace NetCGAL
 		public static bool LoadDir(string dir, out List<MyMesh> meshes)
 		{
 			meshes = [];
-			var dirRemeshed = $"{dir}remeshed\\";
-
-			if (Directory.Exists(dirRemeshed))
-			{
-				Directory.Delete(dirRemeshed, true);
-			}
-			Directory.CreateDirectory(dirRemeshed);
-
 			var files = Directory.EnumerateFiles(dir).Where(f => f.EndsWith(".off")).ToList();
 			for (int i = 0; i < files.Count; i++)
 			{
@@ -158,9 +150,7 @@ namespace NetCGAL
 					if (Load(file, out MyMesh loaded))
 					{
 						meshes.Add(loaded);
-						//loaded.Save($"{dirRemeshed}{loaded.Name}");
-					}
-					
+					}					
 				}
 				catch
 				{
@@ -175,9 +165,13 @@ namespace NetCGAL
 		public bool Save(string path)
 		{
 			Prepare();
-			SaveExtern(path, this);
+			int code = SaveExtern(path, this);
+			if (code == 0)
+			{
+				Console.WriteLine($"saved {path.Split('\\').Last()}");
+			}
 			ClearLocal();
-			return true;
+			return code == 0;
 		}
 
 		public bool Fix(out MyMesh fixing)
@@ -209,10 +203,14 @@ namespace NetCGAL
 		public bool Boolean(MyMesh other, BooleanType type, out MyMesh output)
 		{
 			Prepare();
-			other.Prepare();			
+			other.Prepare();
 
 			int result = BooleanExtern(this, other, type, out output);
-			output.LoadAndClear();
+			if (result == 0)
+			{
+				output.LoadAndClear();
+			}			 
+			
 
 			ClearLocal();
 			other.ClearLocal();

@@ -11,7 +11,7 @@ TimePoint Start(const char* msg) {
 TimePoint Msg(const char* msg, TimePoint start_time) {
 	long long duration = std::chrono::duration_cast<std::chrono::milliseconds>(
 		std::chrono::high_resolution_clock::now() - start_time).count();
-	std::cout << msg << " [mc " << duration << "] ";
+	std::cout << msg << "(mc" << duration << ") ";
 	start_time = std::chrono::high_resolution_clock::now();
 	return std::chrono::high_resolution_clock::now();
 }

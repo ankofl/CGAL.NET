@@ -38,7 +38,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\NetCGAL\NetCGAL.csproj" />
+	  <Reference Include="NetCGAL">
+	    <HintPath>bin\Release\NetCGAL.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

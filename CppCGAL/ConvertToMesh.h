@@ -12,6 +12,8 @@
 #include <CGAL/Polyhedron_items_with_id_3.h>
 #include "FixMesh.h"
 
+#include "MyTimer.h"
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 namespace PMP = CGAL::Polygon_mesh_processing;
@@ -35,13 +37,11 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
             myMesh.indexes[i+2]});
     }
 
-    PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
+   /* PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
 
-    PMP::orient_polygon_soup(points, polygons);
+    PMP::orient_polygon_soup(points, polygons);*/
 
     PMP::polygon_soup_to_polygon_mesh(points, polygons, output);
 
-    size_t code = FixMesh(output);
-
-    return code;
+    return FixMesh(output);
 }

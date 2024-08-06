@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetCGAL.Utils
 {
-	public static class PowerModelUtils
+	public static class PMU
 	{
 		public enum Cats
 		{
@@ -16,6 +16,7 @@ namespace NetCGAL.Utils
 			Roofs,
 			Walls,
 			Windows,
+			StructuralColumns,
 		}
 
 		public static bool LoadSpace(List<string> catFolders, out MyMesh space)
@@ -36,23 +37,19 @@ namespace NetCGAL.Utils
 				{
 					constructs.AddRange(loaded);
 				}
-				else
-				{
-					throw new Exception($"Not loaded <{listCat[c]}>");
-				}
 			}
 			return constructs.Count > 0;
 		}
 
 		public static List<Cats> GetConstrCats()
 		{
-			return
-			[
+			return [
 				Cats.Doors,
 				Cats.Floors,
 				Cats.Roofs,
 				Cats.Walls,
 				Cats.Windows,
+				Cats.StructuralColumns,
 			];
 		}
 
@@ -67,7 +64,9 @@ namespace NetCGAL.Utils
 			for (int f = 0; f < files.Count; f++)
 			{
 				var file = files[f];
+#if DEBUG
 				Console.Write($"{c + 1}/{cats.Count} {f + 1}/{files.Count} {file.Split('\\').Last()} -> ");
+#endif
 				if (MyMesh.Load(file, out MyMesh loaded))
 				{
 					loadedMeshes.Add(loaded);

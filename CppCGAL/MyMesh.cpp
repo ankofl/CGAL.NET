@@ -31,8 +31,7 @@ extern "C" {
         if (ConvertToMesh(input, mesh) != 0){
             return 1;
         }
-        SaveMesh(path, mesh);
-        return 0;
+        return SaveMesh(path, mesh);
     }
 
     __declspec(dllexport) int LoadExtern(const char* path, MyMesh output) {
@@ -60,17 +59,24 @@ extern "C" {
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
+        auto ts = Start("");
+        auto ts2 = Start("");
         Mesh oneMesh;
-        ConvertToMesh(one, oneMesh);
+        ConvertToMesh(one, oneMesh);       
+        ts = Msg("ToMesh1", ts);
         
         Mesh twoMesh;
         ConvertToMesh(two, twoMesh);
+        ts = Msg("ToMesh2", ts);
 
         Mesh out;
         int code = ExecuteBoolean(oneMesh, twoMesh, type, out);
+        ts = Msg("Execute", ts);
         if (code == 0) {
-            ConvertToMyMesh(out, output);
+            code = ConvertToMyMesh(out, output);
+            ts = Msg("ToMyMesh", ts);
         }
+        Msg("total", ts2);
         return code;
     }
 
