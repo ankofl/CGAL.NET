@@ -44,12 +44,13 @@ namespace NetCGAL.Utils
 		public static List<Cats> GetConstrCats()
 		{
 			return [
+				Cats.Walls,
+
 				Cats.Doors,
 				Cats.Floors,
 				Cats.Roofs,
-				Cats.Walls,
 				Cats.Windows,
-				Cats.StructuralColumns,
+				Cats.StructuralColumns,				
 			];
 		}
 
@@ -64,9 +65,6 @@ namespace NetCGAL.Utils
 			for (int f = 0; f < files.Count; f++)
 			{
 				var file = files[f];
-#if DEBUG
-				Console.Write($"{c + 1}/{cats.Count} {f + 1}/{files.Count} {file.Split('\\').Last()} -> ");
-#endif
 				if (MyMesh.Load(file, out MyMesh loaded))
 				{
 					loadedMeshes.Add(loaded);

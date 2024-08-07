@@ -10,20 +10,18 @@ typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
 int SaveMesh(const char* path, Mesh& input, bool logExept = false) {
-    auto ts = Start("save");
-
+    auto ts = start("start_save");
     try {
-        CGAL::IO::write_polygon_mesh(path, input, CGAL::parameters::stream_precision(17));
+        if (CGAL::IO::write_polygon_mesh(path, input, CGAL::parameters::stream_precision(17))) {
+            msg("end_save", ts);
+            return true;
+        }
     }
     catch (const std::exception& e) {
         std::cout << "SaveMesh: exception!" << std::endl;
         if (logExept) {
             std::cerr << e.what();
-        }
-        return 1;
+        }        
     }    
-
-    Msg("", ts);
-
-    return 0;
+    return false;
 }

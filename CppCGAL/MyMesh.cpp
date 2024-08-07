@@ -5,7 +5,7 @@
 #include <CGAL/Polyhedron_items_with_id_3.h>
 #include "ConvertToMesh.h"
 #include "ExecuteBoolean.h"
-#include "LoadMesh.h"
+#include "load_mesh.h"
 #include "ConvertToMyMesh.h"
 #include "SaveMesh.h"
 #include "SplitMesh.h"
@@ -15,6 +15,7 @@
 
 #include "MyTimer.h"
 #include "RemeshMesh.h"
+#include "union_dir.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
@@ -34,13 +35,19 @@ extern "C" {
         return SaveMesh(path, mesh);
     }
 
+    __declspec(dllexport) bool union_dir_extern(const char** paths, size_t count, size_t chunk_size) {
+        std::vector<std::string> files(paths, paths + count);
+        return union_dir(files, chunk_size);
+    }
+
     __declspec(dllexport) int LoadExtern(const char* path, MyMesh output) {
         Mesh mesh;
-        int gg = LoadMesh(path, mesh);
-        if (gg == 0) {
-            gg = ConvertToMyMesh(mesh, output);
+        if (load_mesh(path, mesh)) {
+            if (ConvertToMyMesh(mesh, output)) {
+                return 0;
+            }
         }       
-        return gg;
+        return 0;
     }
 
     __declspec(dllexport) int FixExtern(MyMesh input, MyMesh output) {
@@ -59,24 +66,22 @@ extern "C" {
     }
 
     __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
-        auto ts = Start("");
-        auto ts2 = Start("");
+        auto ts = start("");
         Mesh oneMesh;
         ConvertToMesh(one, oneMesh);       
-        ts = Msg("ToMesh1", ts);
+        msg("ToMesh1", ts);
         
         Mesh twoMesh;
         ConvertToMesh(two, twoMesh);
-        ts = Msg("ToMesh2", ts);
+        msg("ToMesh2", ts);
 
         Mesh out;
         int code = ExecuteBoolean(oneMesh, twoMesh, type, out);
-        ts = Msg("Execute", ts);
+        msg("Execute", ts);
         if (code == 0) {
             code = ConvertToMyMesh(out, output);
-            ts = Msg("ToMyMesh", ts);
+            msg("ToMyMesh", ts);
         }
-        Msg("total", ts2);
         return code;
     }
 

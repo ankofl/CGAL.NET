@@ -36,12 +36,10 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
             myMesh.indexes[i+1],
             myMesh.indexes[i+2]});
     }
-
-   /* PMP::repair_polygon_soup(points, polygons, CGAL::parameters::geom_traits(Array_traits()));
-
-    PMP::orient_polygon_soup(points, polygons);*/
-
+    
+    auto ts = start("");
     PMP::polygon_soup_to_polygon_mesh(points, polygons, output);
+    msg("soup", ts);
 
     return FixMesh(output);
 }

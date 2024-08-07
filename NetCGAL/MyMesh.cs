@@ -174,6 +174,8 @@ namespace NetCGAL
 			return code == 0;
 		}
 
+
+
 		public bool Fix(out MyMesh fixing)
 		{
 			Prepare();
@@ -231,9 +233,16 @@ namespace NetCGAL
 			return code == 0;
 		}
 
+		public static bool UnionDir(List<string> dirs, int chunkSize = 1000)
+		{
+			return union_dir_extern([.. dirs], dirs.Count, chunkSize);
+		}
+
+		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
+		private static extern bool union_dir_extern(string[] paths, int count, int chunkSize);
+
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern int RemeshExtern(MyMesh one, double target_edge_length, int number_of_iterations, out MyMesh output);
-
 
 		[DllImport(pathDll, CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FixExtern(MyMesh one, out MyMesh output);

@@ -7,23 +7,19 @@
 #include <vector>
 #include <map>
 #include "MyMesh.h"
-#include <CGAL/property_map.h>
-#include <CGAL/Polygon_mesh_processing/orientation.h>
-#include <CGAL/Polygon_mesh_processing/repair.h>
 #include "FixMesh.h"
 #include "MyTimer.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
-int ConvertToMyMesh(Mesh& input, MyMesh& output) {
+bool ConvertToMyMesh(Mesh& input, MyMesh& output) {
 
-    int code = FixMesh(input);
-    if (code != 0) {
-        return code;
+    if (!FixMesh(input)) {
+        return false;
     }
     if (!CGAL::is_valid(input)) {
-        return 1;
+        return false;
     }
 
     std::map<K::Point_3, int> pointIndexMap;
@@ -62,5 +58,5 @@ int ConvertToMyMesh(Mesh& input, MyMesh& output) {
         } while (++hc != fi->facet_begin());
     }
 
-    return 0;    
+    return true;    
 }
