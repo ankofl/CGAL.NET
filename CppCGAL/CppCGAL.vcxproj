@@ -22,14 +22,16 @@
     <ClInclude Include="ConvertToMyMesh.h" />
     <ClInclude Include="ExecuteBoolean.h" />
     <ClInclude Include="FixMesh.h" />
-    <ClInclude Include="LoadMesh.h" />
+    <ClInclude Include="load_mesh.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="MyMeshList.h" />
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="RemeshMesh.h" />
     <ClInclude Include="SaveMesh.h" />
     <ClInclude Include="SplitMesh.h" />
+    <ClInclude Include="split_vector.h" />
     <ClInclude Include="ToMyMeshList.h" />
+    <ClInclude Include="union_dir.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -89,6 +91,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <SupportJustMyCode>false</SupportJustMyCode>
       <PreprocessorDefinitions>CGAL_EIGEN3_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +114,7 @@
       <AdditionalIncludeDirectories>C:\dev\vcpkg\vcpkg_installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>CGAL_EIGEN3_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

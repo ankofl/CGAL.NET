@@ -21,10 +21,10 @@ enum BooleanType {
     Dif
 };
 
-int ExecuteBoolean(Mesh& mesh1, Mesh& mesh2, BooleanType type, Mesh& out)
+bool ExecuteBoolean(Mesh& mesh1, Mesh& mesh2, BooleanType type, Mesh& out)
 {
     int code = 0;
-    TimePoint start_time = Start("");
+    auto ts = start("");
 
     if (type == BooleanType::Union) {
         if (!PMP::corefine_and_compute_union(mesh1, mesh2, out)){
@@ -44,7 +44,7 @@ int ExecuteBoolean(Mesh& mesh1, Mesh& mesh2, BooleanType type, Mesh& out)
     else {
         code = 4;
     }
-    std::cout << "boolean code [" << code << ']';
-    Msg("", start_time);
-    return code;
+    std::cout << "boolean[" << code << ']';
+    msg("", ts);
+    return code == 0;
 }

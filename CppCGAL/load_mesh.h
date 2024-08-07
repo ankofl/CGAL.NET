@@ -10,21 +10,19 @@ typedef CGAL::Exact_predicates_inexact_constructions_kernel     K;
 
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
-int LoadMesh(const char* path, Mesh& output) {
+bool load_mesh(const char* path, Mesh& output) {
 
-    std::ifstream input;
+    using namespace std;
+    ifstream input;
     input.open(path);
-    if (!input)
-    {
-        return 1;
+    if (!input) {
+        return false;
     }
     else if (!(input >> output)) {
-        return 2;
+        return false;
     }
 
     input.close();
 
-    size_t code = FixMesh(output);
-
-    return code;
+    return FixMesh(output);
 }
