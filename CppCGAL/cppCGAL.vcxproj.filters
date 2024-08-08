@@ -29,7 +29,7 @@
     <ClInclude Include="MyMesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="ExecuteBoolean.h">
+    <ClInclude Include="execute_boolean.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ConvertToMesh.h">
@@ -41,10 +41,7 @@
     <ClInclude Include="load_mesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="SaveMesh.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="SplitMesh.h">
+    <ClInclude Include="split_mesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="MyMeshList.h">
@@ -59,10 +56,10 @@
     <ClInclude Include="ClearMyMesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MyTimer.h">
+    <ClInclude Include="my_timer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="FixMesh.h">
+    <ClInclude Include="fix_mesh.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="RemeshMesh.h">
@@ -72,6 +69,15 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="split_vector.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="save_mesh.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="load_dir.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="execute_booleans.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -233,7 +233,7 @@ namespace NetCGAL
 			return code == 0;
 		}
 
-		public static bool UnionDir(List<string> dirs, int chunkSize = 1000)
+		public static bool UnionDir(List<string> dirs, int chunkSize = 200)
 		{
 			return union_dir_extern([.. dirs], dirs.Count, chunkSize);
 		}

@@ -7,15 +7,15 @@
 #include <vector>
 #include <map>
 #include "MyMesh.h"
-#include "FixMesh.h"
-#include "MyTimer.h"
+#include "fix_mesh.h"
+#include "my_timer.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 
 bool ConvertToMyMesh(Mesh& input, MyMesh& output) {
 
-    if (!FixMesh(input)) {
+    if (!fix_mesh(input)) {
         return false;
     }
     if (!CGAL::is_valid(input)) {
