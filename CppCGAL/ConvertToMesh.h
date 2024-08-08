@@ -10,9 +10,9 @@
 #include "Array_traits.h"
 #include "MyMesh.h"
 #include <CGAL/Polyhedron_items_with_id_3.h>
-#include "FixMesh.h"
+#include "fix_mesh.h"
 
-#include "MyTimer.h"
+#include "my_timer.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
@@ -41,5 +41,5 @@ int ConvertToMesh(MyMesh& myMesh, Mesh& output)
     PMP::polygon_soup_to_polygon_mesh(points, polygons, output);
     msg("soup", ts);
 
-    return FixMesh(output);
+    return fix_mesh(output);
 }

@@ -4,16 +4,16 @@
 #include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
 #include "ConvertToMesh.h"
-#include "ExecuteBoolean.h"
+#include "execute_boolean.h"
 #include "load_mesh.h"
 #include "ConvertToMyMesh.h"
-#include "SaveMesh.h"
-#include "SplitMesh.h"
+#include "save_mesh.h"
+#include "split_mesh.h"
 #include "MyMeshList.h"
 #include "ToMyMeshList.h"
 #include "ClearMyMesh.h"
 
-#include "MyTimer.h"
+#include "my_timer.h"
 #include "RemeshMesh.h"
 #include "union_dir.h"
 
@@ -32,7 +32,7 @@ extern "C" {
         if (ConvertToMesh(input, mesh) != 0){
             return 1;
         }
-        return SaveMesh(path, mesh);
+        return save_mesh(path, mesh);
     }
 
     __declspec(dllexport) bool union_dir_extern(const char** paths, size_t count, size_t chunk_size) {
@@ -65,24 +65,19 @@ extern "C" {
         return ConvertToMyMesh(mesh, output);
     }
 
-    __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, BooleanType type, MyMesh output) {
+    __declspec(dllexport) int BooleanExtern(MyMesh one, MyMesh two, b_t type, MyMesh output) {
         auto ts = start("");
         Mesh oneMesh;
-        ConvertToMesh(one, oneMesh);       
-        msg("ToMesh1", ts);
+        ConvertToMesh(one, oneMesh);   
         
         Mesh twoMesh;
         ConvertToMesh(two, twoMesh);
-        msg("ToMesh2", ts);
 
         Mesh out;
-        int code = ExecuteBoolean(oneMesh, twoMesh, type, out);
-        msg("Execute", ts);
-        if (code == 0) {
-            code = ConvertToMyMesh(out, output);
-            msg("ToMyMesh", ts);
+        if (!execute_boolean(oneMesh, twoMesh, type, out)) {
+            return false;
         }
-        return code;
+        return ConvertToMyMesh(out, output);;
     }
 
 	__declspec(dllexport) int SplitExtern(MyMesh myMesh, MyMeshList myMeshList) {
@@ -90,7 +85,7 @@ extern "C" {
 		ConvertToMesh(myMesh, mesh);
 
 		std::vector<Mesh> components;
-		int count = SplitMesh(mesh, components);      
+		int count = split_mesh(mesh, components);      
 
         std::vector<MyMesh> meshes;
 
