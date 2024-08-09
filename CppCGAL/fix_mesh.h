@@ -18,6 +18,8 @@
 #include <CGAL/Polygon_mesh_processing/repair.h>
 #include <CGAL/Polygon_mesh_processing/polygon_mesh_to_polygon_soup.h>
 #include <CGAL/Polygon_mesh_processing/polygon_soup_to_polygon_mesh.h>
+
+#include <CGAL/Polygon_mesh_processing/remesh_planar_patches.h>
 #include "my_timer.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
@@ -26,6 +28,10 @@ typedef CGAL::Polyhedron_3<K, CGAL::Polyhedron_items_with_id_3> Mesh;
 namespace PMP = CGAL::Polygon_mesh_processing;
 
 bool fix_mesh(Mesh& mesh) {
+    Mesh remeshed;
+    PMP::remesh_planar_patches(mesh, remeshed);
+    mesh = remeshed;
+
     std::vector<std::array<FT, 3> > points;
     std::vector<std::vector<int>> polygons;
     PMP::polygon_mesh_to_polygon_soup(mesh, points, polygons);
@@ -51,6 +57,7 @@ bool fix_mesh(Mesh& mesh) {
     if (!PMP::is_outward_oriented(mesh)) {
         PMP::orient(mesh);        
     }
+
     PMP::experimental::autorefine(mesh);
     return CGAL::is_valid_polygon_mesh(mesh);
 }

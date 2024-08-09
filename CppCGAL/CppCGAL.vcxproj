@@ -16,15 +16,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array_traits.h" />
+    <ClInclude Include="boolean_decompose.h" />
+    <ClInclude Include="mesh_decompose.h" />
     <ClInclude Include="ClearMyMesh.h" />
+    <ClInclude Include="clear_dir.h" />
     <ClInclude Include="ConvertMyMeshListToVectorMyMesh.h" />
     <ClInclude Include="ConvertToMesh.h" />
     <ClInclude Include="ConvertToMyMesh.h" />
-    <ClInclude Include="execute_boolean.h" />
+    <ClInclude Include="create_convex.h" />
+    <ClInclude Include="boolean_simple.h" />
     <ClInclude Include="execute_booleans.h" />
     <ClInclude Include="fix_mesh.h" />
     <ClInclude Include="load_dir.h" />
     <ClInclude Include="load_mesh.h" />
+    <ClInclude Include="make_bbox.h" />
     <ClInclude Include="MyMesh.h" />
     <ClInclude Include="MyMeshList.h" />
     <ClInclude Include="my_timer.h" />

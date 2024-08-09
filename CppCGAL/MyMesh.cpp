@@ -4,7 +4,6 @@
 #include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
 #include "ConvertToMesh.h"
-#include "execute_boolean.h"
 #include "load_mesh.h"
 #include "ConvertToMyMesh.h"
 #include "save_mesh.h"
@@ -74,7 +73,7 @@ extern "C" {
         ConvertToMesh(two, twoMesh);
 
         Mesh out;
-        if (!execute_boolean(oneMesh, twoMesh, type, out)) {
+        if (!boolean_simple(oneMesh, twoMesh, type, out)) {
             return false;
         }
         return ConvertToMyMesh(out, output);;
