@@ -17,6 +17,8 @@ namespace NetCGAL.Utils
 			Walls,
 			Windows,
 			StructuralColumns,
+			CurtainWallPanels,
+			CurtainWallMullions,
 		}
 
 		public static bool LoadSpace(List<string> catFolders, out MyMesh space)
